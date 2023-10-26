@@ -8,12 +8,20 @@ export const columns = [
     accessorKey: "name",
   },
   {
-    header: "Business",
-    accessorKey: "business",
-  },
-  {
     header: "Contact",
     accessorKey: "phone",
+  },
+  {
+    header: "Address",
+    accessorKey: "address",
+  },
+  {
+    header: "Description",
+    accessorKey: "description",
+  },
+  {
+    header: "Agency",
+    accessorKey: "agency",
   },
   {
     header: "Action",

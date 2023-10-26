@@ -7,18 +7,18 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import agent from "./Agent.json";
-import { columns } from "./AgentColumns";
+import customer from "./Customers.json";
+import { columns } from "./CustomerColumns";
 import { Header } from "../../components/Header";
 import { CiSearch } from "react-icons/ci";
 
-export const Agents = () => {
+export const Customers = () => {
   const [sorting, setsorting] = useState([]);
   const [filter, setfilter] = useState("");
 
   let i;
 
-  const data = useMemo(() => agent, []);
+  const data = useMemo(() => customer, []);
 
   const table = useReactTable({
     columns,
@@ -37,8 +37,8 @@ export const Agents = () => {
   return (
     <div className="ml-10">
       <Header />
-      <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg ">
-        <h2 className="text-3xl pt-6 ml-7">Agents</h2>
+      <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg">
+        <h2 className="text-3xl pt-6 ml-7">Customers</h2>
         <div className="text-xl mt-10 ml-10">
           Showing :{" "}
           <select className="p-1 rounded-md text-xl">
@@ -88,7 +88,7 @@ export const Agents = () => {
                   <th
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
-                    className="border border-zinc-200 p-3 text-slate-400"
+                    className="border border-zinc-200 p-5 text-slate-400"
                   >
                     {flexRender(
                       header.column.columnDef.header,

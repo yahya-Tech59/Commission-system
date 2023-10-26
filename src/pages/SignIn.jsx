@@ -23,7 +23,7 @@ export const SignIn = () => {
 
   return (
     <div className="flex bg-slate-100">
-      <img src={hope} alt="" className="h-screen" />
+      <img src={hope} alt="" className="h-fit" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[600px] h-[650px] rounded-xl p-3"

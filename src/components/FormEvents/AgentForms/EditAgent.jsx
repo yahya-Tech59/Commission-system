@@ -7,19 +7,12 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { hope } from "../assets/img";
 
-export const AddAgentForm = () => {
+export const EditAgent = () => {
   const schema = yup.object().shape({
-    firstname: yup.string().required(),
-    lastname: yup.string().required(),
-    email: yup.string().email().required(),
-    phone: yup.number().required(),
-    password: yup.string().min(4).max(15).required(),
-    ConfirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null])
-      .required(),
-    // age: yup.number().positive().integer().min(18).required(),
-    //address: yup.string().required(),
+    id: yup.string().required(),
+    name: yup.string().required(),
+    business: yup.string().email().required(),
+    contact: yup.number().required(),
   });
 
   const { register, handleSubmit } = useForm({
@@ -41,7 +34,7 @@ export const AddAgentForm = () => {
           <h2 className="text-3xl ml-40">Add New Agent</h2>
           <div className="flex mt-4 gap-5">
             <div className="flex flex-col gap-1">
-              <label>First Name </label>
+              <label>ID</label>
               <input
                 type="text"
                 {...register("firstname")}
@@ -50,7 +43,7 @@ export const AddAgentForm = () => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label>lastName</label>
+              <label>Name</label>
               <input
                 type="text"
                 {...register("lastname")}
@@ -61,7 +54,7 @@ export const AddAgentForm = () => {
           </div>
           <div className="flex mt-4 gap-5">
             <div className="flex flex-col gap-1">
-              <label>Email </label>
+              <label>Business </label>
               <input
                 type="text"
                 {...register("Email")}
@@ -70,33 +63,12 @@ export const AddAgentForm = () => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label>Phone </label>
+              <label>Contact </label>
               <input
                 type="number"
                 {...register("phone")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
                 placeholder="123456789"
-              />
-            </div>
-          </div>
-
-          <div className="flex mt-4 gap-5">
-            <div className="flex flex-col gap-1">
-              <label>Password</label>
-              <input
-                type="password"
-                {...register("password")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="xxxxxx"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Confirm password</label>
-              <input
-                type="password"
-                {...register("ConfirmPassword")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="xxxxxx"
               />
             </div>
           </div>

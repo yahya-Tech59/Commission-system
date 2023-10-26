@@ -4,10 +4,10 @@ import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 import { Dashboard } from "./pages/Dashboard";
 import { Agents } from "./pages/Agents/Agents";
-import { Customers } from "./pages/Customers";
-import { Orders } from "./pages/Orders";
-import { Products } from "./pages/Products";
-import { Users } from "./pages/Users";
+import { Customers } from "./pages/Customers/Customers";
+import { Products } from "./pages/Products/Products";
+import { Orders } from "./pages/Orders/Orders";
+import { Users } from "./pages/Users/Users";
 import { SignOut } from "./pages/SignOut";
 import { Sidebar } from "./components/Sidebar";
 

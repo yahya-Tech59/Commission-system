@@ -1,5 +1,10 @@
 import React from "react";
+import { SignIn } from "./SignIn";
 
 export const SignOut = () => {
-  return <div>SignOut</div>;
+  return (
+    <div className="">
+      <SignIn />
+    </div>
+  );
 };

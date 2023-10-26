@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
-import { BsFillCartDashFill } from "react-icons/bs";
-import { BsFillHeartFill } from "react-icons/bs";
-import { MdNotificationsActive } from "react-icons/md";
+import { cart, heart, notif } from "../assets/img";
 import { AiOutlineHome } from "react-icons/ai";
 import { MdRealEstateAgent } from "react-icons/md";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
@@ -45,10 +43,10 @@ export const Sidebar = () => {
             <img src={user} alt="user" className="ml-24 mt-10" />
             <h1 className="text-xl ml-24">Jama Abdi</h1>
             <p className="text-slate-400 ml-28">@Abdi</p>
-            <span className="    ">
-              <BsFillCartDashFill className="text-2xl ml-20" />
-              <BsFillHeartFill className="text-2xl ml-28" />
-              <MdNotificationsActive className="text-2xl ml-36" />
+            <span className="flex ml-20 mt-8 space-x-4 ">
+              <img src={cart} alt="cart" />
+              <img src={heart} alt="cart" />
+              <img src={notif} alt="cart" />
             </span>
 
             <div className="mt-10 text-xl list-none">

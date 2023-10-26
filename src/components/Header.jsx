@@ -5,7 +5,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 
 export const Header = () => {
   return (
-    <div className="flex bg-white mt-5 ml-10 h-16 rounded-md w-[1570px] ">
+    <div className="flex bg-white mt-3 ml-2 h-16 rounded-md w-[96rem] ">
       <button className="flex mt-5 ml-3 mr-3 ">
         <AiFillHome className="text-blue-600 text-2xl mr-3  " />
         Home
@@ -20,7 +20,7 @@ export const Header = () => {
 
       <div className="border border-slate-200 h-12 mt-2 ml-6"></div>
 
-      <div className="flex gap-4 ml-[450px] pl-[600px]">
+      <div className="flex gap-4 ml-[24rem] pl-[40rem]">
         <h2 className="text-xl mt-5 mr-8">EN</h2>
         <IoMdNotificationsOutline className="text-2xl mt-5 -ml-10" />
         <div className="border border-slate-300 h-8  mt-4"></div>

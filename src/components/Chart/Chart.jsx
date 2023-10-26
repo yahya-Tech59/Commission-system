@@ -14,7 +14,7 @@ export const Chart = () => {
   });
   return (
     <>
-      <div className="w-[1540px] h-[570px] bg-white mt-10 ml-10 p-5 rounded-lg mb-3">
+      <div className="w-[96rem] h-[35rem] bg-white ml-1 p-5 rounded-lg mb-6 mt-[1.5rem]">
         <h2 className="text-2xl">User</h2>
         <div className="flex justify-end gap-2 -mt-8">
           <h2>Sort By :</h2>

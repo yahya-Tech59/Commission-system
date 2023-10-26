@@ -7,26 +7,24 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import agent from "./Agent.json";
-import { columns } from "./AgentColumns";
+import users from "./users.json";
+import { columns } from "./UserColumns";
 import { Header } from "../../components/Header";
 import { CiSearch } from "react-icons/ci";
 
-export const Agents = () => {
+export const Users = () => {
   const [sorting, setsorting] = useState([]);
   const [filter, setfilter] = useState("");
 
-  let i;
+  const data = useMemo(() => users, []);
 
-  const data = useMemo(() => agent, []);
+  let i;
 
   const table = useReactTable({
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting: sorting,
       globalFilter: filter,
@@ -37,8 +35,8 @@ export const Agents = () => {
   return (
     <div className="ml-10">
       <Header />
-      <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg ">
-        <h2 className="text-3xl pt-6 ml-7">Agents</h2>
+      <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg">
+        <h2 className="text-3xl pt-6 ml-7">Users</h2>
         <div className="text-xl mt-10 ml-10">
           Showing :{" "}
           <select className="p-1 rounded-md text-xl">
@@ -54,16 +52,16 @@ export const Agents = () => {
             <option value="">10</option>
           </select>
           {/* <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const pageNumber = e.target.value
-                ? Number(e.target.value) - 1
-                : 0;
-              gotoPage(pageNumber);
-            }}
-            className="w-24 h-8 ml-2 shadow-md shadow-slate-400 p-1 rounded-md"
-          /> */}
+        type="number"
+        defaultValue={pageIndex + 1}
+        onChange={(e) => {
+          const pageNumber = e.target.value
+            ? Number(e.target.value) - 1
+            : 0;
+          gotoPage(pageNumber);
+        }}
+        className="w-24 h-8 ml-2 shadow-md shadow-slate-400 p-1 rounded-md"
+      /> */}
         </div>
 
         <div className="mt-[-4rem]">
@@ -88,7 +86,7 @@ export const Agents = () => {
                   <th
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
-                    className="border border-zinc-200 p-3 text-slate-400"
+                    className="border border-zinc-200 p-5 text-slate-400"
                   >
                     {flexRender(
                       header.column.columnDef.header,
