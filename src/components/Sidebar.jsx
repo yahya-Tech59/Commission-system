@@ -49,39 +49,39 @@ export const Sidebar = () => {
               <img src={notif} alt="cart" />
             </span>
 
-            <div className="mt-10 text-xl list-none">
+            <div className="mt-10 text-xl list-none ml-2">
               <div className="border border-slate-200 w-56 ml-8 mb-5"></div>
-              <div className="flex hover:bg-slate-600 hover:text-white text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <AiOutlineHome className="ml-12 mr-5 mt-3 " />
                 <Link to="/" className="py-2">
                   Admin Dashboard
                 </Link>
               </div>
-              <div className="flex hover:bg-slate-600 hover:text-white text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <MdRealEstateAgent className="ml-12 mr-5 mt-3" />
                 <Link to="/agents" className="py-2">
                   Agents
                 </Link>
               </div>
-              <div className="flex hover:bg-slate-600 hover:text-white text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <MdOutlineDashboardCustomize className="ml-12 mr-5 mt-3 " />
                 <Link to="/customers" className="py-2">
                   Customers
                 </Link>
               </div>
-              <div className="flex hover:bg-slate-600 hover:text-white text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <MdProductionQuantityLimits className="ml-12 mr-5 mt-3" />
                 <Link to="/products" className="py-2">
                   Products
                 </Link>
               </div>
-              <div className="flex hover:bg-slate-600 hover:text-white text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <AiOutlineOrderedList className="ml-12 mr-5 mt-3" />
                 <Link to="/orders" className="py-2">
                   Orders
                 </Link>
               </div>
-              <div className="flex hover:bg-slate-600 hover:text-white text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <HiUserGroup className="ml-12 mr-5 mt-3" />
                 <Link to="/users" className="py-2">
                   Users
@@ -90,14 +90,14 @@ export const Sidebar = () => {
 
               <div className="border border-slate-200 w-56 ml-8 mt-5"></div>
               <h2 className="-ml-36 mt-5 mb-3">OTHERS</h2>
-              <div className="flex hover:bg-slate-600 hover:text-white text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <GoSignOut className="ml-12 mr-5 mt-4" />
                 <Link to="/signout" className="py-3">
                   SignOut
                 </Link>
               </div>
 
-              <div className="flex hover:bg-slate-600 hover:text-white mt-[-12px] text-slate-500">
+              <div className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 ">
                 <BsFillExclamationCircleFill className="ml-12 mr-5 mt-4" />
                 <Link to="/help" className="py-3">
                   Help

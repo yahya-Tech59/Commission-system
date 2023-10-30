@@ -10,6 +10,8 @@ import { Orders } from "./pages/Orders/Orders";
 import { Users } from "./pages/Users/Users";
 import { SignOut } from "./pages/SignOut";
 import { Sidebar } from "./components/Sidebar";
+import { AddUser } from "./components/FormEvents/UserForms/AddUsers";
+// import { EditOrder } from "./components/FormEvents/OrderForms/AddOrder";
 
 const App = () => {
   return (

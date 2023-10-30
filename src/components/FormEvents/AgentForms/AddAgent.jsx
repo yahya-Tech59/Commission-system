@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-export const EditCustomer = () => {
+export const AddAgent = () => {
   const schema = yup.object().shape({
     id: yup.string().required(),
     name: yup.string().required(),
@@ -22,16 +22,16 @@ export const EditCustomer = () => {
     <div className="flex bg-slate-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[54rem] rounded-xl p-3"
+        className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[38rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
-          <h2 className="text-3xl ml-40">Edit Customer</h2>
+          <h2 className="text-3xl ml-40">Add New Agent</h2>
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">
               <label>ID</label>
               <input
-                type="text"
+                type="number"
                 {...register("firstname")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="1"
@@ -48,39 +48,21 @@ export const EditCustomer = () => {
             </div>
 
             <div className="flex flex-col gap-1">
+              <label>Business </label>
+              <input
+                type="text"
+                {...register("Email")}
+                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
+                placeholder="web..."
+              />
+            </div>
+            <div className="flex flex-col gap-1">
               <label>Contact </label>
               <input
                 type="number"
                 {...register("phone")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="123456789"
-              />
-            </div>
-            <div>
-              <label>Address </label>
-              <input
-                type="number"
-                {...register("address")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="mogadishu..."
-              />
-            </div>
-            <div>
-              <label>Description</label>
-              <input
-                type="number"
-                {...register("description")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="simething..."
-              />
-            </div>
-            <div>
-              <label>Agency</label>
-              <input
-                type="text"
-                {...register("phone")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="web..."
               />
             </div>
           </div>
@@ -94,7 +76,7 @@ export const EditCustomer = () => {
               type="submit"
               className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-blue-600 text-white text-xl "
             >
-              Edit
+              Submit
             </button>
             <button
               type="submit"
