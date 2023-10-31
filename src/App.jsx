@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SignIn } from "./pages/SignIn";
-import { SignUp } from "./pages/SignUp";
-import { Dashboard } from "./pages/Dashboard";
-import { Agents } from "./pages/Agents/Agents";
-import { Customers } from "./pages/Customers/Customers";
-import { Products } from "./pages/Products/Products";
-import { Orders } from "./pages/Orders/Orders";
-import { Users } from "./pages/Users/Users";
-import { SignOut } from "./pages/SignOut";
+import {
+  Dashboard,
+  Agents,
+  Customers,
+  Products,
+  Orders,
+  Users,
+  SignIn,
+  SignUp,
+  SignOut,
+} from "./pages/index";
 import { Sidebar } from "./components/Sidebar";
-import { AddUser } from "./components/FormEvents/UserForms/AddUsers";
-// import { EditOrder } from "./components/FormEvents/OrderForms/AddOrder";
 
 const App = () => {
   return (
