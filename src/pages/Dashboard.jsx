@@ -5,7 +5,7 @@ import { Header } from "../components/Header";
 
 export const Dashboard = () => {
   return (
-    <div className="bg-slate-100 flex">
+    <div className="bg-slate-100 pr-10 flex">
       <div className="flex-col">
         <div className="ml-11 ">
           <Header className="ml-20" />

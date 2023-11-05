@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navlink-active {
+  background-color: blue;
+}
+
+#light {
+  background-color: aliceblue;
+}
+
+#dark {
+  background-color: #000111;
+}

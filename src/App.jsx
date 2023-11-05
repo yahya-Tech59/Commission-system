@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   Dashboard,
@@ -15,7 +15,7 @@ import { Sidebar } from "./components/Sidebar";
 
 const App = () => {
   return (
-    <div className="card">
+    <div>
       <div className="flex bg-zinc-100 ">
         <BrowserRouter>
           <Sidebar />
