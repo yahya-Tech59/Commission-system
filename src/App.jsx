@@ -18,17 +18,16 @@ const App = () => {
     <div>
       <div className="flex bg-zinc-100 ">
         <BrowserRouter>
-          <Sidebar />
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="agents" element={<Agents />} />
-            <Route path="customers" element={<Customers />} />
-            <Route path="products" element={<Products />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="users" element={<Users />} />
+            <Route path="/" element={[<Sidebar />, <Dashboard />]} />
+            <Route path="agents" element={[<Sidebar />, <Agents />]} />
+            <Route path="customers" element={[<Sidebar />, <Customers />]} />
+            <Route path="products" element={[<Sidebar />, <Products />]} />
+            <Route path="orders" element={[<Sidebar />, <Orders />]} />
+            <Route path="users" element={[<Sidebar />, <Users />]} />
             <Route path="signIn" element={<SignIn />} />
             <Route path="signUp" element={<SignUp />} />
-            <Route path="signout" element={<SignOut />} />
+            <Route path="signout" element={[<Sidebar />, <SignOut />]} />
           </Routes>
         </BrowserRouter>
       </div>

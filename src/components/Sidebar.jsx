@@ -17,15 +17,15 @@ import { NavLink } from "react-router-dom";
 export const Sidebar = () => {
   const [sidebarOpen, setsidebarOpen] = useState(true);
 
-  const [isActive, setIsActive] = useState(true);
+  // const [isActive, setIsActive] = useState(true);
 
-  const handleActiveNavLink = () => {
-    if (isActive !== true) {
-      return "flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 active:bg-zinc-200";
-    } else {
-      return "text-blue-600";
-    }
-  };
+  // const handleActiveNavLink = () => {
+  //   if (isActive !== true) {
+  //     return "flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 active:bg-zinc-200";
+  //   } else {
+  //     return "text-blue-600";
+  //   }
+  // };
 
   const handleOpen = () => {
     setsidebarOpen(true);
@@ -44,9 +44,9 @@ export const Sidebar = () => {
           <FaBars className="text-3xl ml-10 mt-5 " />
         </div>
       ) : (
-        <div className="w-72 h-screen shadow-slate-400 shadow-md bg-white">
+        <div className="w-72 h-screen shadow-slate-400 shadow-md bg-white ">
           <div onClick={handleClose}>
-            <BsFillArrowLeftCircleFill className="text-blue-700 text-2xl ml-[275px] relative top-10" />
+            <BsFillArrowLeftCircleFill className="text-blue-700 text-2xl ml-[275px] relative top-10 " />
           </div>
           <h1 className="text-3xl text-center relativeIoNotificationsSharp top-4">
             Billing System

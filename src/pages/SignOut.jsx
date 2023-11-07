@@ -1,10 +1,10 @@
 import React from "react";
-import { SignIn } from "./SignIn";
+import { Link } from "react-router-dom";
 
 export const SignOut = () => {
   return (
     <div className="">
-      <SignIn />
+      <Link to="/signIn"></Link>
     </div>
   );
 };

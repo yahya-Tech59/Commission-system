@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -6,30 +7,52 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { hope } from "../assets/img";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const SignUp = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+
   const schema = yup.object().shape({
-    firstname: yup.string().required(),
-    lastname: yup.string().required(),
+    // firstname: yup.string().required(),
+    // lastname: yup.string().required(),
+    name: yup.string().required("name is required"),
     email: yup.string().email().required(),
-    phone: yup.number().required(),
     password: yup.string().min(4).max(15).required(),
     ConfirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null])
+      .oneOf([yup.ref("password"), null], "password must match")
       .required(),
-    // age: yup.number().positive().integer().min(18).required(),
-    //address: yup.string().required(),
   });
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
   });
+  const { errors } = formState;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`${baseUrl}/api/auth/register`, data);
+      localStorage.setItem("token", res.data.token);
+
+      if (res.status === 200) {
+        alert("Resgistration successful");
+      }
+      setLoading(false);
+    } catch (error) {
+      alert("Registration failed. Please try again.");
+    }
   };
 
+  if (loading === true) {
+    return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
+  }
   return (
     <div className="flex bg-slate-100">
       <img src={hope} alt="" className="h-screen" />
@@ -40,65 +63,68 @@ export const SignUp = () => {
         <div className="pb-16 ml-5 mt-8">
           <h2 className="text-3xl ml-40">Sign Up</h2>
           <h2 className="text-lg ml-28 mt-2">Create Your Hope UI Account</h2>
+
           <div className="flex mt-4 gap-5">
-            <div className="flex flex-col gap-1">
-              <label>First Name </label>
-              <input
-                type="text"
-                {...register("firstname")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="john"
-              />
+            <div>
+              <span className="flex flex-col gap-1">
+                <label>Name </label>
+                <input
+                  type="text"
+                  {...register("name")}
+                  className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mb-1  mr-1 rounded-lg w-60"
+                  placeholder="john"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </span>
+              <p className="text-red-400 ml-2">{errors.name?.message}</p>
             </div>
-            <div className="flex flex-col gap-1">
-              <label>lastName</label>
-              <input
-                type="text"
-                {...register("lastname")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="Doe"
-              />
-            </div>
-          </div>
-          <div className="flex mt-4 gap-5">
-            <div className="flex flex-col gap-1">
-              <label>Email </label>
-              <input
-                type="text"
-                {...register("Email")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="xyz@example.com"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Phone </label>
-              <input
-                type="number"
-                {...register("phone")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="123456789"
-              />
+
+            <div>
+              <span className="flex flex-col gap-1">
+                <label>Email </label>
+                <input
+                  type="text"
+                  {...register("email")}
+                  className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
+                  placeholder="xyz@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </span>
+              <p className="text-red-400 ml-2">{errors.email?.message}</p>
             </div>
           </div>
 
           <div className="flex mt-4 gap-5">
-            <div className="flex flex-col gap-1">
-              <label>Password</label>
-              <input
-                type="password"
-                {...register("password")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="xxxxxx"
-              />
+            <div>
+              <span className="flex flex-col gap-1">
+                <label>Password</label>
+                <input
+                  type="password"
+                  {...register("password")}
+                  className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
+                  placeholder="xxxxxx"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </span>
+              <p className="text-red-400 ml-2">{errors.password?.message}</p>
             </div>
-            <div className="flex flex-col gap-1">
-              <label>Confirm password</label>
-              <input
-                type="password"
-                {...register("ConfirmPassword")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
-                placeholder="xxxxxx"
-              />
+
+            <div>
+              <span className="flex flex-col gap-1">
+                <label>Confirm password</label>
+                <input
+                  type="password"
+                  {...register("ConfirmPassword")}
+                  className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-60"
+                  placeholder="xxxxxx"
+                />
+              </span>
+              <p className="text-red-400 ml-2">
+                {errors.ConfirmPassword?.message}
+              </p>
             </div>
           </div>
 
@@ -128,7 +154,9 @@ export const SignUp = () => {
 
           <h2 className="text-center mt-3">
             Already have an account
-            <span className="text-blue-600 ml-1">Sign Up</span>
+            <Link className="text-blue-600 ml-1" to="/signIn">
+              Sign In
+            </Link>
           </h2>
         </div>
       </form>
