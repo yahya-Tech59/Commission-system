@@ -117,7 +117,7 @@ export const SignIn = () => {
 
           <h2 className="text-center mt-3">
             Don't have an account?
-            <Link className="text-blue-600 ml-1" to="/signUp">
+            <Link className="text-blue-600 ml-1" to="/">
               Click here to SignUp
             </Link>
           </h2>

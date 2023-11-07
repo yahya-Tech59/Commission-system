@@ -62,11 +62,11 @@ export const Sidebar = () => {
               <img src={notif} alt="cart" />
             </span>
 
-            <div className="mt-10 text-xl list-none ml-2 space-y-4">
+            <nav className="mt-10 text-xl list-none ml-2 space-y-4">
               <div className="border border-slate-200 w-56 ml-8 mb-5"></div>
               <>
                 <NavLink
-                  to="/"
+                  to="/dashboard"
                   className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 active:bg-zinc-200"
                 >
                   <AiOutlineHome className="ml-12 mr-5 mt-1 " />
@@ -140,7 +140,7 @@ export const Sidebar = () => {
                   Help
                 </NavLink>
               </>
-            </div>
+            </nav>
           </div>
         </div>
       )}
