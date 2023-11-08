@@ -1,6 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import { SignIn } from "../pages/SignIn";
+import { Outlet, Navigate } from "react-router-dom";
 
 const useAuth = () => {
   const user = { loggedIn: false };
@@ -9,5 +8,5 @@ const useAuth = () => {
 
 export const ProtectedRoutes = () => {
   const isAuth = useAuth();
-  return isAuth ? <Outlet /> : <SignIn />;
+  return isAuth ? <Outlet /> : <Navigate to="/" />;
 };
