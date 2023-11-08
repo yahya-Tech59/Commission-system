@@ -123,7 +123,7 @@ export const Sidebar = () => {
               <h2 className="ml-10 mt-10 mb-6 text-slate-600">OTHERS</h2>
               <>
                 <NavLink
-                  to="/signout"
+                  to="/"
                   className="flex mb-3  text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 active:bg-zinc-200"
                 >
                   <GoSignOut className="ml-12 mr-5 mt-1" />
