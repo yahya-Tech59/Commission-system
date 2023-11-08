@@ -11,6 +11,7 @@ import {
   SignUp,
   SignOut,
 } from "./pages/index";
+import { NoMatch } from "./pages/NoMatch";
 import { Sidebar } from "./components/Sidebar";
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="orders" element={[<Sidebar />, <Orders />]} />
             <Route path="users" element={[<Sidebar />, <Users />]} />
             <Route path="signout" element={[<Sidebar />, <SignOut />]} />
+            <Route path="*" element={<NoMatch />} />
           </Routes>
         </BrowserRouter>
       </div>

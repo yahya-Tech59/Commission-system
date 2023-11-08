@@ -69,7 +69,7 @@ export const Sidebar = () => {
                   to="/dashboard"
                   className="flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 active:bg-zinc-200"
                 >
-                  <AiOutlineHome className="ml-12 mr-5 mt-1 " />
+                  <AiOutlineHome className="ml-12 mr-5  " />
                   Admin Dashboard
                 </NavLink>
               </>

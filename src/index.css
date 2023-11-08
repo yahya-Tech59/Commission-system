@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 nav a.active {
-  font-weight: bold;
   color: rgb(0, 119, 255);
 }

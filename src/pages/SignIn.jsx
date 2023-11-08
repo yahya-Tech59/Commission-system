@@ -38,7 +38,7 @@ export const SignIn = () => {
       const res = await axios.post(`${baseUrl}/api/auth/login`, data);
       setLoading(false);
       localStorage.getItem("token", res.data.token);
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       console.log("Login failed. Please try again.");
     }
@@ -117,7 +117,7 @@ export const SignIn = () => {
 
           <h2 className="text-center mt-3">
             Don't have an account?
-            <Link className="text-blue-600 ml-1" to="/">
+            <Link className="text-blue-600 ml-1" to="/signUp">
               Click here to SignUp
             </Link>
           </h2>

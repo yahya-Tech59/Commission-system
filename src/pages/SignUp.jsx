@@ -39,6 +39,14 @@ export const SignUp = () => {
     try {
       setLoading(true);
       const res = await axios.post(`${baseUrl}/api/auth/register`, data);
+      // .then((response) => {
+      // })
+      // .catch((err) => {
+      //   const myErrors = { ...err.response.data.errors };
+
+      //   console.log(myErrors);
+      // });
+
       localStorage.setItem("token", res.data.token);
 
       if (res.status === 200) {
@@ -46,7 +54,7 @@ export const SignUp = () => {
       }
       setLoading(false);
     } catch (error) {
-      alert("Registration failed. Please try again.");
+      alert(error.data);
     }
   };
 
@@ -154,7 +162,7 @@ export const SignUp = () => {
 
           <h2 className="text-center mt-3">
             Already have an account
-            <Link className="text-blue-600 ml-1" to="/signIn">
+            <Link className="text-blue-600 ml-1" to="/">
               Sign In
             </Link>
           </h2>
