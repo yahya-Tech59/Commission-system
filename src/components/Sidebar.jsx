@@ -17,16 +17,6 @@ import { NavLink } from "react-router-dom";
 export const Sidebar = () => {
   const [sidebarOpen, setsidebarOpen] = useState(true);
 
-  // const [isActive, setIsActive] = useState(true);
-
-  // const handleActiveNavLink = () => {
-  //   if (isActive !== true) {
-  //     return "flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 active:bg-zinc-200";
-  //   } else {
-  //     return "text-blue-600";
-  //   }
-  // };
-
   const handleOpen = () => {
     setsidebarOpen(true);
   };

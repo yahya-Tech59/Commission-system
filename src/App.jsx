@@ -13,6 +13,7 @@ import {
 } from "./pages/index";
 import { NoMatch } from "./pages/NoMatch";
 import { Sidebar } from "./components/Sidebar";
+import { ProtectedRoutes } from "./components/ProtectedRoutes";
 
 const App = () => {
   return (
@@ -21,15 +22,17 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignIn />} />
-            <Route path="signUp" element={<SignUp />} />
-            <Route path="/dashboard" element={[<Sidebar />, <Dashboard />]} />
-            <Route path="agents" element={[<Sidebar />, <Agents />]} />
-            <Route path="customers" element={[<Sidebar />, <Customers />]} />
-            <Route path="products" element={[<Sidebar />, <Products />]} />
-            <Route path="orders" element={[<Sidebar />, <Orders />]} />
-            <Route path="users" element={[<Sidebar />, <Users />]} />
-            <Route path="signout" element={[<Sidebar />, <SignOut />]} />
-            <Route path="*" element={<NoMatch />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="signUp" element={<SignUp />} />
+              <Route path="/dashboard" element={[<Sidebar />, <Dashboard />]} />
+              <Route path="agents" element={[<Sidebar />, <Agents />]} />
+              <Route path="customers" element={[<Sidebar />, <Customers />]} />
+              <Route path="products" element={[<Sidebar />, <Products />]} />
+              <Route path="orders" element={[<Sidebar />, <Orders />]} />
+              <Route path="users" element={[<Sidebar />, <Users />]} />
+              <Route path="signout" element={[<Sidebar />, <SignOut />]} />
+              <Route path="*" element={<NoMatch />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>
