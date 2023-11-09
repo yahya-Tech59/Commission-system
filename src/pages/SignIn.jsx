@@ -8,7 +8,7 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { hope } from "../assets/img";
 import axios from "axios";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -38,17 +38,18 @@ export const SignIn = () => {
       const res = await axios.post(`${baseUrl}/api/auth/login`, data);
 
       if (res.status === 200) {
-        alert("logged in Successfuly");
-        setLoading(false);
-        localStorage.getItem("token", res.data.token);
+        localStorage.setItem("token", res.data.token);
         navigate("/dashboard");
+        // alert("logged in Successfuly");
+        setLoading(false);
       } else {
-        return <Navigate to="/" />;
+        console.error("Authentication failed");
       }
     } catch (error) {
-      console.log("Login failed. Please try again.");
+      console.log("Login failed");
     }
   };
+
   if (loading === true) {
     return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
   }

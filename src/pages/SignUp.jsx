@@ -16,8 +16,6 @@ export const SignUp = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-
   const schema = yup.object().shape({
     // firstname: yup.string().required(),
     // lastname: yup.string().required(),
@@ -36,6 +34,8 @@ export const SignUp = () => {
   const { errors } = formState;
 
   const onSubmit = async (data) => {
+    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+
     try {
       setLoading(true);
       const res = await axios.post(`${baseUrl}/api/auth/register`, data);

@@ -1,10 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const SignOut = () => {
-  return (
-    <div className="">
-      <Link to="/signIn"></Link>
-    </div>
-  );
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    return <Navigate to="/" />;
+  };
+  return handleLogout();
 };
