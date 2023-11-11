@@ -1,12 +1,44 @@
-import React, { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
+import axios from "axios";
 
-import agent from "./Agent.json";
+// import agent from "./Agent.json";
 import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
+import { CiSearch } from "react-icons/ci";
 
 export const Agents = () => {
-  const data = useMemo(() => agent, []);
+  const [agents, setAgents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+
+  const fetchAgentData = async () => {
+    // const token = , {
+    //   headers: {
+    //     Authorization: localStorage.getItem("token"),
+    //   },
+    // }
+    try {
+      // setLoading(true);
+      const res = await axios.get(`${baseUrl}/api/v1/agents`);
+      const response = res.data.json();
+      setAgents(response);
+      // setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // if (loading === true) {
+  //   return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
+  // }
+
+  const data = useMemo(() => agents, [agents]);
+
+  useEffect(() => {
+    fetchAgentData();
+  }, []);
 
   return (
     <div className="ml-10">
@@ -27,20 +59,86 @@ export const Agents = () => {
             <option value="">9</option>
             <option value="">10</option>
           </select>
-          {/* <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const pageNumber = e.target.value
-                ? Number(e.target.value) - 1
-                : 0;
-              gotoPage(pageNumber);
-            }}
-            className="w-24 h-8 ml-2 shadow-md shadow-slate-400 p-1 rounded-md"
-          />  */}
+        </div>
+
+        <div className="mt-[-4rem]">
+          <CiSearch className="ml-[91rem] relative top-6 text-2xl" />
+          <input
+            type="text"
+            // value={filter}
+            // onChange={(e) => setfilter(e.target.value)}
+            placeholder="Search"
+            className="w-44 h-8 ml-[82rem] mt-[-20rem] shadow-sm shadow-slate-400 p-1 rounded-md bg-zinc-100"
+          />
         </div>
 
         <Table data={data} columns={columns} />
+
+        {/* <table className="w-[92rem] ml-8 mt-10 mb-2">
+          <thead>
+            <tr className="hover:bg-zinc-700 hover:text-white">
+              <th className="border border-zinc-200 p-3 text-slate-400">No</th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Name
+              </th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Description
+              </th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Bussiness
+              </th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Phone
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {agents.map((agent, index) => (
+              <tr key={index} className="hover:bg-zinc-700 hover:text-white">
+                <td className=" border border-zinc-200 p-4">{agent.id}</td>
+                <td className=" border border-zinc-200 p-4">
+                  {agent.fullname}
+                </td>
+                <td className=" border border-zinc-200 p-4">
+                  {agent.description}
+                </td>
+                <td className=" border border-zinc-200 p-4">
+                  {agent.business}
+                </td>
+                <td className=" border border-zinc-200 p-4">{agent.phone}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table> */}
+
+        {/* <div className="ml-[78rem] pb-3">
+          <button
+            onClick={() => table.setPageIndex(0)}
+            className="bg-slate-200 p-1 m-1 rounded-md"
+          >
+            {"<<"}
+          </button>
+          <button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            className="bg-slate-200 p-1 m-1 rounded-md"
+          >
+            Previous Page
+          </button>
+          <button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            className="bg-slate-200 p-1 m-1 rounded-md"
+          >
+            Next Page
+          </button>
+          <button
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            className="bg-slate-200 p-1 m-1 rounded-md"
+          >
+            {">>"}
+          </button>
+        </div>  */}
       </div>
     </div>
   );

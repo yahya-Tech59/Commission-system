@@ -5,7 +5,11 @@ export const columns = [
   },
   {
     header: "Name",
-    accessorKey: "name",
+    accessorKey: "fullname",
+  },
+  {
+    header: "Description",
+    accessorKey: "description",
   },
   {
     header: "Business",
@@ -15,7 +19,7 @@ export const columns = [
     header: "Contact",
     accessorKey: "phone",
   },
-  {
-    header: "Action",
-  },
+  // {
+  //   header: "Action",
+  // },
 ];
