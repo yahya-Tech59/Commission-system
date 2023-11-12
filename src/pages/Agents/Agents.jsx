@@ -1,28 +1,34 @@
 import { useState, useEffect, useMemo } from "react";
-import axios from "axios";
 
 // import agent from "./Agent.json";
-import { columns } from "./AgentColumns";
+// import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
 import { CiSearch } from "react-icons/ci";
+import axios from "axios";
+import { useFetchAgents } from "../../hooks/useFetchAgents";
 
 export const Agents = () => {
   const [agents, setAgents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
   const fetchAgentData = async () => {
-    // const token = , {
-    //   headers: {
-    //     Authorization: localStorage.getItem("token"),
-    //   },
-    // }
+    const token = localStorage.getItem("token");
     try {
       // setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/agents`);
-      const response = res.data.json();
+      const res = await axios.get(`${baseUrl}/api/v1/agents`, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // console.log(res.data);
+      const response = await res.data;
+      // console.log(response);
       setAgents(response);
       // setLoading(false);
     } catch (err) {
@@ -30,15 +36,37 @@ export const Agents = () => {
     }
   };
 
+  useEffect(() => {
+    fetchAgentData();
+  }, []);
   // if (loading === true) {
   //   return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
   // }
 
   const data = useMemo(() => agents, [agents]);
 
-  useEffect(() => {
-    fetchAgentData();
-  }, []);
+  const columns = [
+    {
+      header: "No",
+      accessorKey: "id",
+    },
+    {
+      header: "Name",
+      accessorKey: "fullname",
+    },
+    {
+      header: "Description",
+      accessorKey: "description",
+    },
+    {
+      header: "Business",
+      accessorKey: "business",
+    },
+    {
+      header: "Contact",
+      accessorKey: "phone",
+    },
+  ];
 
   return (
     <div className="ml-10">
@@ -61,7 +89,7 @@ export const Agents = () => {
           </select>
         </div>
 
-        <div className="mt-[-4rem]">
+        {/* <div className="mt-[-4rem]">
           <CiSearch className="ml-[91rem] relative top-6 text-2xl" />
           <input
             type="text"
@@ -70,27 +98,31 @@ export const Agents = () => {
             placeholder="Search"
             className="w-44 h-8 ml-[82rem] mt-[-20rem] shadow-sm shadow-slate-400 p-1 rounded-md bg-zinc-100"
           />
-        </div>
+        </div> */}
 
         <Table data={data} columns={columns} />
 
         {/* <table className="w-[92rem] ml-8 mt-10 mb-2">
           <thead>
-            <tr className="hover:bg-zinc-700 hover:text-white">
-              <th className="border border-zinc-200 p-3 text-slate-400">No</th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Name
-              </th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Description
-              </th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Bussiness
-              </th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Phone
-              </th>
-            </tr>
+            {columns.map((column) => (
+              <tr className="hover:bg-zinc-700 hover:text-white">
+                <th className="border border-zinc-200 p-3 text-slate-400">
+                  {column.No}
+                </th>
+                <th className="border border-zinc-200 p-3 text-slate-400">
+                  {column.Name}
+                </th>
+                <th className="border border-zinc-200 p-3 text-slate-400">
+                  {column.Description}
+                </th>
+                <th className="border border-zinc-200 p-3 text-slate-400">
+                  {column.Bussiness}
+                </th>
+                <th className="border border-zinc-200 p-3 text-slate-400">
+                  {column.Phone}
+                </th>
+              </tr>
+            ))}
           </thead>
           <tbody>
             {agents.map((agent, index) => (

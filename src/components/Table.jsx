@@ -14,8 +14,8 @@ export const Table = ({ data, columns }) => {
   const [filter, setfilter] = useState("");
 
   const table = useReactTable({
-    columns,
     data,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -82,30 +82,30 @@ export const Table = ({ data, columns }) => {
           </tbody>
         </table>
 
-        <div className="ml-[78rem] pb-3">
+        <div className="ml-[76rem] pb-3">
           <button
             onClick={() => table.setPageIndex(0)}
-            className="bg-slate-200 p-1 m-1 rounded-md"
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
           >
             {"<<"}
           </button>
           <button
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="bg-slate-200 p-1 m-1 rounded-md"
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
           >
             Previous Page
           </button>
           <button
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="bg-slate-200 p-1 m-1 rounded-md"
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
           >
             Next Page
           </button>
           <button
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            className="bg-slate-200 p-1 m-1 rounded-md"
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
           >
             {">>"}
           </button>

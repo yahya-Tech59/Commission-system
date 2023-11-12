@@ -8,11 +8,14 @@ export const useFetchAgents = () => {
   const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
   const fetchAgentData = async () => {
+    const token = localStorage.getItem("token");
     try {
       setLoading(true);
       const res = await axios.get(`${baseUrl}/api/v1/agents`, {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
