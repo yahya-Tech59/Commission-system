@@ -19,8 +19,8 @@ export const useFetchAgents = () => {
         },
       });
 
-      const response = res.data.json();
-      setAgents(response);
+      const response = await res.data;
+      setAgents(response.data);
       setLoading(false);
     } catch (error) {
       console.log(err);
@@ -30,10 +30,6 @@ export const useFetchAgents = () => {
       fetchAgentData();
     }, []);
 
-    if (loading === true) {
-      return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
-    }
-
-    return { agents };
+    return { agents, loading };
   };
 };

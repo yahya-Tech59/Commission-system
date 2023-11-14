@@ -8,16 +8,16 @@ import { CiSearch } from "react-icons/ci";
 import axios from "axios";
 import { useFetchAgents } from "../../hooks/useFetchAgents";
 
+const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+
 export const Agents = () => {
   const [agents, setAgents] = useState([]);
-  // const [loading, setLoading] = useState(true);
-
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+  const [loading, setLoading] = useState(true);
 
   const fetchAgentData = async () => {
     const token = localStorage.getItem("token");
     try {
-      // setLoading(true);
+      setLoading(true);
       const res = await axios.get(`${baseUrl}/api/v1/agents`, {
         headers: {
           "Content-Type": "application/json",
@@ -26,11 +26,15 @@ export const Agents = () => {
         },
       });
 
-      // console.log(res.data);
-      const response = await res.data;
-      // console.log(response);
-      setAgents(response);
-      // setLoading(false);
+      if (res.status === 200) {
+        const response = await res.data;
+        // console.log(response.data);
+
+        setAgents(response.data);
+        setLoading(false);
+      }
+
+      // console.log("API Response:", res.data);
     } catch (err) {
       console.log(err);
     }
@@ -39,11 +43,14 @@ export const Agents = () => {
   useEffect(() => {
     fetchAgentData();
   }, []);
-  // if (loading === true) {
-  //   return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
-  // }
 
-  const data = useMemo(() => agents, [agents]);
+  if (loading === true) {
+    return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
+  }
+
+  // const agentsData = useMemo(() => [...agents], [agents]);
+
+  // const agentsData = useMemo(() => agents, []);
 
   const columns = [
     {
@@ -100,29 +107,25 @@ export const Agents = () => {
           />
         </div> */}
 
-        <Table data={data} columns={columns} />
+        {/* <Table data={agentsData} columns={columns} /> */}
 
-        {/* <table className="w-[92rem] ml-8 mt-10 mb-2">
+        <table className="w-[92rem] ml-8 mt-10 mb-2">
           <thead>
-            {columns.map((column) => (
-              <tr className="hover:bg-zinc-700 hover:text-white">
-                <th className="border border-zinc-200 p-3 text-slate-400">
-                  {column.No}
-                </th>
-                <th className="border border-zinc-200 p-3 text-slate-400">
-                  {column.Name}
-                </th>
-                <th className="border border-zinc-200 p-3 text-slate-400">
-                  {column.Description}
-                </th>
-                <th className="border border-zinc-200 p-3 text-slate-400">
-                  {column.Bussiness}
-                </th>
-                <th className="border border-zinc-200 p-3 text-slate-400">
-                  {column.Phone}
-                </th>
-              </tr>
-            ))}
+            <tr className="hover:bg-zinc-700 hover:text-white">
+              <th className="border border-zinc-200 p-3 text-slate-400">No</th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Name
+              </th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Description
+              </th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Bussiness
+              </th>
+              <th className="border border-zinc-200 p-3 text-slate-400">
+                Phone
+              </th>
+            </tr>
           </thead>
           <tbody>
             {agents.map((agent, index) => (
@@ -141,7 +144,7 @@ export const Agents = () => {
               </tr>
             ))}
           </tbody>
-        </table> */}
+        </table>
 
         {/* <div className="ml-[78rem] pb-3">
           <button
