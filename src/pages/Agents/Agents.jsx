@@ -11,8 +11,8 @@ const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 export const Agents = () => {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [perPage, setPerPage] = useState(10);
+
+  const data = useMemo(() => agents, [agents]);
 
   const fetchAgentData = async () => {
     const token = localStorage.getItem("token");
@@ -43,8 +43,6 @@ export const Agents = () => {
   useEffect(() => {
     fetchAgentData();
   }, []);
-
-  const data = useMemo(() => agents, [agents]);
 
   if (loading === true) {
     return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
