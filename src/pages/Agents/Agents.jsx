@@ -30,8 +30,6 @@ export const Agents = () => {
         setAgents(response.data);
         setLoading(false);
       }
-
-      // console.log("API Response:", res.data);
     } catch (err) {
       console.log(err);
     }
@@ -50,21 +48,6 @@ export const Agents = () => {
       <Header />
       <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg ">
         <h2 className="text-3xl pt-6 ml-7">Agents</h2>
-        <div className="text-xl mt-10 ml-10">
-          Showing :{" "}
-          <select className="p-1 rounded-md text-xl">
-            <option value="">1</option>
-            <option value="">2</option>
-            <option value="">3</option>
-            <option value="">4</option>
-            <option value="">5</option>
-            <option value="">6</option>
-            <option value="">7</option>
-            <option value="">8</option>
-            <option value="">9</option>
-            <option value="">10</option>
-          </select>
-        </div>
 
         <Table data={agents} columns={columns} />
 

@@ -30,6 +30,19 @@ export const Table = ({ data, columns }) => {
   return (
     <div className="">
       <div className="mt-3 mb-6 rounded-lg ">
+        {/* <div className="text-xl mt-10 ml-10">
+          <select
+            value={pageSize}
+            onChange={(e) => setPageSize(Number(e.target.value))}
+          >
+            {[10, 25, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div> */}
+
         <div className="mt-[-4rem]">
           <CiSearch className="ml-[91rem] relative top-6 text-2xl" />
           <input
@@ -81,6 +94,13 @@ export const Table = ({ data, columns }) => {
             ))}
           </tbody>
         </table>
+
+        {/* <span>
+          Page{" "}
+          <strong>
+            {table.pageIndex + 1} of {table.pageOptions.length}
+          </strong>{" "}
+        </span> */}
 
         <div className="ml-[76rem] pb-3">
           <button
