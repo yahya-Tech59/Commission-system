@@ -4,8 +4,20 @@ export const columns = [
     accessorKey: "id",
   },
   {
+    header: "Description",
+    accessorKey: "description",
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+  },
+  {
     header: "Product",
-    accessorKey: "product",
+    accessorKey: "product_id",
+  },
+  {
+    header: "Product-Pride-ID",
+    accessorKey: "product_price_id",
   },
   {
     header: "Customer",
@@ -18,10 +30,6 @@ export const columns = [
   {
     header: "Amount",
     accessorKey: "Amount",
-  },
-  {
-    header: "Description",
-    accessorKey: "description",
   },
   {
     header: "Action",

@@ -1,20 +1,17 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
-// import agent from "./Agent.json";
 import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
 import axios from "axios";
 
-const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-
 export const Agents = () => {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const data = useMemo(() => agents, [agents]);
+  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
-  const fetchAgentData = async () => {
+  const fetchAgent = async () => {
     const token = localStorage.getItem("token");
     try {
       setLoading(true);
@@ -41,7 +38,7 @@ export const Agents = () => {
   };
 
   useEffect(() => {
-    fetchAgentData();
+    fetchAgent();
   }, []);
 
   if (loading === true) {
@@ -69,7 +66,7 @@ export const Agents = () => {
           </select>
         </div>
 
-        <Table data={data} columns={columns} />
+        <Table data={agents} columns={columns} />
 
         {/* <table className="w-[92rem] ml-8 mt-10 mb-2">
           <thead>

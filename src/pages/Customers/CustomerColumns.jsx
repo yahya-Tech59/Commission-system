@@ -5,7 +5,7 @@ export const columns = [
   },
   {
     header: "Name",
-    accessorKey: "name",
+    accessorKey: "fullname",
   },
   {
     header: "Contact",
@@ -22,8 +22,5 @@ export const columns = [
   {
     header: "Agency",
     accessorKey: "agency",
-  },
-  {
-    header: "Action",
   },
 ];

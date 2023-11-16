@@ -1,12 +1,49 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 
-import product from "./Product.json";
 import { columns } from "./ProductColumn";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
+import axios from "axios";
 
 export const Products = () => {
-  const data = useMemo(() => product, []);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+
+  const fetchProducts = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      setLoading(true);
+      const res = await axios.get(`${baseUrl}/api/v1/products`, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        const response = await res.data;
+        console.log(response);
+
+        setProducts(response.data);
+        setLoading(false);
+      }
+
+      // console.log("API Response:", res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  if (loading === true) {
+    return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
+  }
 
   return (
     <div className="ml-10">
@@ -40,7 +77,7 @@ export const Products = () => {
           /> */}
         </div>
 
-        <Table data={data} columns={columns} />
+        <Table data={products} columns={columns} />
       </div>
     </div>
   );
