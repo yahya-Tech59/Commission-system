@@ -102,7 +102,7 @@ export const Table = ({ data, columns }) => {
           </strong>{" "}
         </span> */}
 
-        <div className="ml-[76rem] pb-3">
+        {/* <div className="ml-[76rem] pb-3">
           <button
             onClick={() => table.setPageIndex(0)}
             className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
@@ -129,7 +129,7 @@ export const Table = ({ data, columns }) => {
           >
             {">>"}
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

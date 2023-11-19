@@ -8,14 +8,20 @@ import axios from "axios";
 export const Agents = () => {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    fetchAgent(newPage);
+  };
 
   const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
-  const fetchAgent = async () => {
+  const fetchAgent = async (page) => {
     const token = localStorage.getItem("token");
     try {
       setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/agents?page=20`, {
+      const res = await axios.get(`${baseUrl}/api/v1/agents?page=${page}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -36,8 +42,8 @@ export const Agents = () => {
   };
 
   useEffect(() => {
-    fetchAgent();
-  }, []);
+    fetchAgent(currentPage);
+  }, [currentPage]);
 
   if (loading === true) {
     return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
@@ -50,6 +56,34 @@ export const Agents = () => {
         <h2 className="text-3xl pt-6 ml-7">Agents</h2>
 
         <Table data={agents} columns={columns} />
+
+        <div className="ml-[76rem] pb-3">
+          {/* <button
+            onClick={() => table.setPageIndex(0)}
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
+          >
+            {"<<"}
+          </button> */}
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
+          >
+            Previous Page
+          </button>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
+          >
+            Next Page
+          </button>
+          {/* <button
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
+          >
+            {">>"}
+          </button> */}
+        </div>
 
         {/* <table className="w-[92rem] ml-8 mt-10 mb-2">
           <thead>
