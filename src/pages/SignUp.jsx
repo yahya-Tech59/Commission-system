@@ -39,13 +39,6 @@ export const SignUp = () => {
     try {
       setLoading(true);
       const res = await axios.post(`${baseUrl}/api/auth/register`, data);
-      // .then((response) => {
-      // })
-      // .catch((err) => {
-      //   const myErrors = { ...err.response.data.errors };
-
-      //   console.log(myErrors);
-      // });
 
       localStorage.setItem("token", res.data.token);
 

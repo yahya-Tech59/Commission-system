@@ -57,10 +57,7 @@ export const Table = ({ data, columns }) => {
         <table className="w-[92rem] ml-8 mt-10 mb-2">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr
-                key={headerGroup.id}
-                className="hover:bg-zinc-700 hover:text-white"
-              >
+              <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
@@ -84,7 +81,7 @@ export const Table = ({ data, columns }) => {
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-zinc-700 hover:text-white">
+              <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className=" border border-zinc-200 p-4">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -1,22 +1,55 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
 
 export const AddAgent = () => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [business, setBusiness] = useState("");
+  const [contact, setContact] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const schema = yup.object().shape({
-    id: yup.string().required(),
-    name: yup.string().required(),
-    business: yup.string().email().required(),
-    contact: yup.number().required(),
+    fullname: yup.string().required(),
+    description: yup.string().required(),
+    business: yup.string().required(),
+    phone: yup.number().required(),
   });
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+    const token = localStorage.getItem("token");
+
+    try {
+      setLoading(true);
+      const res = await axios
+        .post(`${baseUrl}/api/v1/agents`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((result) => result.res.data.json());
+
+      if (res.status === 200) {
+        alert("Agent Resgistered successful");
+        setLoading(false);
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
+
+  if (loading === true) {
+    return <h1 className="text-3xl font-semibold ">Loading...</h1>;
+  }
 
   return (
     <div className="flex bg-slate-100">
@@ -29,21 +62,25 @@ export const AddAgent = () => {
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">
-              <label>ID</label>
-              <input
-                type="number"
-                {...register("firstname")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="1"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
               <label>Name</label>
               <input
                 type="text"
-                {...register("lastname")}
+                {...register("fullname")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="john"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label>Description</label>
+              <input
+                type="text"
+                {...register("description")}
+                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
+                placeholder="description..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
 
@@ -51,9 +88,11 @@ export const AddAgent = () => {
               <label>Business </label>
               <input
                 type="text"
-                {...register("Email")}
+                {...register("business")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="web..."
+                value={business}
+                onChange={(e) => setBusiness(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -63,6 +102,8 @@ export const AddAgent = () => {
                 {...register("phone")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="123456789"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
               />
             </div>
           </div>
