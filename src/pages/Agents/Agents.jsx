@@ -15,6 +15,13 @@ export const Agents = () => {
     fetchAgent(newPage);
   };
 
+  // const handlePageChange = () => {
+  //   const prevPage = {
+  //     first_page_url:
+  //       "http://spiky-crater-dep2vxlep8.ploi.online/api/v1/agents?page=1",
+  //   };
+  // };
+
   const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
   const fetchAgent = async (page) => {
@@ -58,12 +65,12 @@ export const Agents = () => {
         <Table data={agents} columns={columns} />
 
         <div className="ml-[76rem] pb-3">
-          {/* <button
-            onClick={() => table.setPageIndex(0)}
+          <button
+            onClick={() => handlePageChange(currentPage === 20)}
             className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
           >
             {"<<"}
-          </button> */}
+          </button>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -73,16 +80,17 @@ export const Agents = () => {
           </button>
           <button
             onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === 20}
             className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
           >
             Next Page
           </button>
-          {/* <button
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          <button
+            onClick={() => handlePageChange()}
             className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
           >
             {">>"}
-          </button> */}
+          </button>
         </div>
 
         {/* <table className="w-[92rem] ml-8 mt-10 mb-2">
