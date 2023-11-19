@@ -15,7 +15,7 @@ export const Agents = () => {
     const token = localStorage.getItem("token");
     try {
       setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/agents`, {
+      const res = await axios.get(`${baseUrl}/api/v1/agents?page=20`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
