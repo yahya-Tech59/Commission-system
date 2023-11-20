@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { IoMdAdd } from "react-icons/io";
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { AddAgent } from "../../components/FormEvents/AgentForms/AddAgent";
-import { EditAgent } from "../../components/FormEvents/AgentForms/EdigAgent";
-import { DeleteAgent } from "../../components/FormEvents/AgentForms/DeleteAgent";
+import { EditUser } from "../../components/FormEvents/UserForms/EditUser";
+import { DeleteUser } from "../../components/FormEvents/UserForms/DeleteUser";
 
 export const columns = [
   {
@@ -23,44 +21,32 @@ export const columns = [
     header: "Actions",
     accessorKey: "actions",
     cell: ({ row }) => {
-      const [showAddAgent, setShowAddAgent] = useState(false);
-      const [showEditAgent, setShowEditAgent] = useState(false);
-      const [showDeleteAgent, setShowDeleteAgent] = useState(false);
+      const [showEditUser, setShowEditUser] = useState(false);
+      const [showDeleteUser, setShowDeleteUser] = useState(false);
 
       return (
         <div className="flex space-x-4 hover:text-black ">
           <button
-            onClick={() => setShowAddAgent(true)}
-            className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          >
-            <IoMdAdd />
-          </button>
-          <button
-            onClick={() => setShowEditAgent(true)}
+            onClick={() => setShowEditUser(true)}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiEditLine />
           </button>
           <button
-            onClick={() => setShowDeleteAgent(true)}
+            onClick={() => setShowDeleteUser(true)}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiDeleteBin2Line />
           </button>
 
-          {showAddAgent && (
+          {showEditUser && (
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <AddAgent onClose={() => setShowAddAgent(false)} />
+              <EditUser onClose={() => setShowEditUser(false)} />
             </div>
           )}
-          {showEditAgent && (
+          {showDeleteUser && (
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <EditAgent onClose={() => setShowEditAgent(false)} />
-            </div>
-          )}
-          {showDeleteAgent && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <DeleteAgent onClose={() => setShowDeleteAgent(false)} />
+              <DeleteUser onClose={() => setShowDeleteUser(false)} />
             </div>
           )}
         </div>

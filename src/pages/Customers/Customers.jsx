@@ -4,11 +4,14 @@ import { columns } from "./CustomerColumns";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
 import axios from "axios";
+import { AddCustomer } from "../../components/FormEvents/CustomerForms/AddCustomer";
+import { IoMdAdd } from "react-icons/io";
 
 export const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showAddCustomer, setShowAddCustomer] = useState(false);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -54,6 +57,21 @@ export const Customers = () => {
       <Header />
       <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg">
         <h2 className="text-3xl pt-6 ml-7">Customers</h2>
+
+        <div className="ml-[70rem] mb-[-5rem] ">
+          <button
+            onClick={() => setShowAddCustomer(true)}
+            className=" flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "
+          >
+            Add Customer
+            <IoMdAdd className=" text-2xl" />
+          </button>
+          {showAddCustomer && (
+            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+              <AddCustomer onClose={() => setShowAddCustomer(false)} />
+            </div>
+          )}
+        </div>
 
         <Table data={customers} columns={columns} />
 

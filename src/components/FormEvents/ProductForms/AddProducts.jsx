@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
+import { IoCloseOutline } from "react-icons/io5";
 
-export const AddProduct = () => {
+export const AddProduct = ({ onClose }) => {
   const schema = yup.object().shape({
     id: yup.string().required(),
     name: yup.string().required(),
@@ -25,7 +27,15 @@ export const AddProduct = () => {
         className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[54rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
-          <h2 className="text-3xl ml-40">Add New Product</h2>
+          <div className="flex">
+            <h2 className="text-3xl ml-40">Add New Product</h2>
+            <button
+              onClick={onClose}
+              className=" h-8 w-8 p-1 bg-blue-500 text-white text-2xl font-medium rounded-md hover:bg-blue-600 ml-36"
+            >
+              <IoCloseOutline />
+            </button>
+          </div>
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">

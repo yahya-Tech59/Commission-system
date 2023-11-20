@@ -4,7 +4,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { IoCloseOutline } from "react-icons/io5";
 
-export const EditOrder = ({ onClose }) => {
+export const EditUser = ({ onClose }) => {
   const schema = yup.object().shape({
     id: yup.string().required(),
     name: yup.string().required(),
@@ -28,7 +28,7 @@ export const EditOrder = ({ onClose }) => {
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
-            <h2 className="text-3xl ml-40">Edit Order</h2>
+            <h2 className="text-3xl ml-40">Edit User</h2>
             <button
               onClick={onClose}
               className=" h-8 w-8 p-1 bg-blue-500 text-white text-2xl font-medium rounded-md hover:bg-blue-600 ml-36"
@@ -48,58 +48,22 @@ export const EditOrder = ({ onClose }) => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label>Product</label>
+              <label>Name</label>
               <input
                 type="text"
-                {...register("product")}
+                {...register("productName")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="speaker"
+                placeholder="john"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label>Customer</label>
+              <label>Email</label>
               <input
                 type="text"
-                {...register("customer")}
+                {...register("price")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="james"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Agent </label>
-              <input
-                type="text"
-                {...register("agent")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="web"
-              />
-            </div>
-            <div>
-              <label>Amount </label>
-              <input
-                type="number"
-                {...register("amount")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="$12"
-              />
-            </div>
-            <div>
-              <label>Description</label>
-              <input
-                type="text"
-                {...register("description")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="something"
-              />
-            </div>
-            <div>
-              <label>status</label>
-              <input
-                type="text"
-                {...register("status")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="active"
+                placeholder="$xyz@gmail.com"
               />
             </div>
           </div>
