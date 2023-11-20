@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -28,18 +28,24 @@ export const EditAgent = () => {
 
     try {
       setLoading(true);
-      const res = await axios
-        .post(`${baseUrl}/api/v1/agents`, data, {
+      const res = await axios.get(
+        `${baseUrl}/api/v1/agents/:agent/edit`,
+        data,
+        {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             Authorization: `Bearer ${token}`,
           },
-        })
-        .then((result) => result.res.data.json());
+        }
+      );
 
       if (res.status === 200) {
-        alert("Agent Resgistered successful");
+        const agentData = res.data[0];
+        setName(agentData.fullname);
+        setDescription(agentData.description);
+        setBusiness(agentData.business);
+        setContact(agentData.phone);
         setLoading(false);
       }
     } catch (error) {
@@ -47,9 +53,13 @@ export const EditAgent = () => {
     }
   };
 
-  if (loading === true) {
-    return <h1 className="text-3xl font-semibold ">Loading...</h1>;
-  }
+  useEffect(() => {
+    onSubmit();
+  }, []);
+
+  // if (loading === true) {
+  //   return <h1 className="text-3xl font-semibold ">Loading...</h1>;
+  // }
 
   return (
     <div className="flex bg-slate-100">

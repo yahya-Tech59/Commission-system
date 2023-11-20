@@ -3,7 +3,6 @@ import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { EditAgent } from "../../components/FormEvents/AgentForms/EdigAgent";
 import { DeleteAgent } from "../../components/FormEvents/AgentForms/DeleteAgent";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 
 export const columns = [
   {
