@@ -5,7 +5,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { IoCloseOutline } from "react-icons/io5";
 
-export const EditAgent = ({ onClose }) => {
+export const EditAgent = ({ onClose, agentId }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [business, setBusiness] = useState("");
@@ -23,23 +23,19 @@ export const EditAgent = ({ onClose }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
+  const fetchAgent = async (data) => {
     const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
     const token = localStorage.getItem("token");
 
     try {
       setLoading(true);
-      const res = await axios.get(
-        `${baseUrl}/api/v1/agents/:agent/edit`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.get(`${baseUrl}/api/v1/agents/${agentId}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (res.status === 200) {
         const agentData = res.data[0];
@@ -47,6 +43,7 @@ export const EditAgent = ({ onClose }) => {
         setDescription(agentData.description);
         setBusiness(agentData.business);
         setContact(agentData.phone);
+
         setLoading(false);
       }
     } catch (error) {
@@ -55,8 +52,30 @@ export const EditAgent = ({ onClose }) => {
   };
 
   useEffect(() => {
-    onSubmit();
-  }, []);
+    fetchAgent(agentId);
+  }, [agentId]);
+
+  const onSubmit = async (data) => {
+    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+    const token = localStorage.getItem("token");
+
+    try {
+      setLoading(true);
+      const res = await axios.put(`${baseUrl}/api/v1/agents/${agentId}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        alert("updated Successfuly");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   // if (loading === true) {
   //   return <h1 className="text-3xl font-semibold ">Loading...</h1>;
@@ -128,9 +147,9 @@ export const EditAgent = ({ onClose }) => {
           </div>
 
           {/* <div className="flex mt-6 gap-4 justify-center ">
-            <input type="checkbox" />
-            <p>I agree With The Terms Of Use</p>
-          </div> */}
+              <input type="checkbox" />
+              <p>I agree With The Terms Of Use</p>
+            </div> */}
           <div className="flex gap-72 ml-5 ">
             <button
               type="submit"
