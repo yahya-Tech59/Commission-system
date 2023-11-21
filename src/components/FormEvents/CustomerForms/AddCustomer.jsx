@@ -6,18 +6,40 @@ import { IoCloseOutline } from "react-icons/io5";
 
 export const AddCustomer = ({ onClose }) => {
   const schema = yup.object().shape({
-    id: yup.string().required(),
-    name: yup.string().required(),
-    business: yup.string().email().required(),
+    fullname: yup.string().required(),
     contact: yup.number().required(),
+    address: yup.string().required(),
+    description: yup.string().required(),
+    agency: yup.number().required(),
   });
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+    const token = localStorage.getItem("token");
+
+    try {
+      setLoading(true);
+      const res = await axios
+        .post(`${baseUrl}/api/v1/customers`, data, {
+          headers: {
+            "Content-Type": "Application/json",
+            Accept: "Application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((result) => result.res.data.json());
+
+      if (res.status === 200) {
+        alert("Customer Registered Successfuly");
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -39,19 +61,10 @@ export const AddCustomer = ({ onClose }) => {
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">
-              <label>ID</label>
-              <input
-                type="text"
-                {...register("firstname")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="1"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
               <label>Name</label>
               <input
                 type="text"
-                {...register("lastname")}
+                {...register("fullname")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="john"
               />
@@ -60,8 +73,8 @@ export const AddCustomer = ({ onClose }) => {
             <div className="flex flex-col gap-1">
               <label>Contact</label>
               <input
-                type="text"
-                {...register("Email")}
+                type="number"
+                {...register("phone")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="123456"
               />
@@ -70,7 +83,7 @@ export const AddCustomer = ({ onClose }) => {
             <div>
               <label>Address </label>
               <input
-                type="number"
+                type="text"
                 {...register("address")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="mogadishu..."
@@ -79,7 +92,7 @@ export const AddCustomer = ({ onClose }) => {
             <div>
               <label>Description</label>
               <input
-                type="number"
+                type="text"
                 {...register("description")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="something..."
@@ -88,8 +101,8 @@ export const AddCustomer = ({ onClose }) => {
             <div>
               <label>Agency</label>
               <input
-                type="text"
-                {...register("phone")}
+                type="number"
+                {...register("agency")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="web..."
               />

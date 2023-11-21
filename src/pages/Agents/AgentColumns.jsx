@@ -31,7 +31,7 @@ export const columns = [
     cell: ({ row }) => {
       const [showEditAgent, setShowEditAgent] = useState(false);
       const [showDeleteAgent, setShowDeleteAgent] = useState(false);
-      const [agentId, setAgentId] = useState([]);
+      const [id, setId] = useState([]);
 
       return (
         <div className="flex space-x-4 hover:text-black ">
@@ -50,15 +50,12 @@ export const columns = [
 
           {showEditAgent && (
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <EditAgent
-                onClose={() => setShowEditAgent(false)}
-                agentId={agentId}
-              />
+              <EditAgent onClose={() => setShowEditAgent(false)} id={id} />
             </div>
           )}
           {showDeleteAgent && (
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <DeleteAgent onClose={() => setShowDeleteAgent(false)} />
+              <DeleteAgent onClose={() => setShowDeleteAgent(false)} id={id} />
             </div>
           )}
         </div>

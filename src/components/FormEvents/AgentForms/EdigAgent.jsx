@@ -5,11 +5,11 @@ import * as yup from "yup";
 import axios from "axios";
 import { IoCloseOutline } from "react-icons/io5";
 
-export const EditAgent = ({ onClose, agentId }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [business, setBusiness] = useState("");
-  const [contact, setContact] = useState("");
+export const EditAgent = ({ onClose, id, deleteAgent }) => {
+  const [fullname, setFullName] = useState();
+  const [description, setDescription] = useState();
+  const [business, setBusiness] = useState();
+  const [contact, setContact] = useState();
   const [loading, setLoading] = useState(false);
 
   const schema = yup.object().shape({
@@ -23,45 +23,45 @@ export const EditAgent = ({ onClose, agentId }) => {
     resolver: yupResolver(schema),
   });
 
-  const fetchAgent = async (data) => {
-    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-    const token = localStorage.getItem("token");
-
-    try {
-      setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/agents/${agentId}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.status === 200) {
-        const agentData = res.data[0];
-        setName(agentData.fullname);
-        setDescription(agentData.description);
-        setBusiness(agentData.business);
-        setContact(agentData.phone);
-
-        setLoading(false);
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
   useEffect(() => {
-    fetchAgent(agentId);
-  }, [agentId]);
+    const fetchAgent = async () => {
+      const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+      const token = localStorage.getItem("token");
 
-  const onSubmit = async (data) => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${baseUrl}/api/v1/agents/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.status === 200) {
+          const agentData = res.data[0];
+          setFullName(agentData.fullname || "");
+          setDescription(agentData.description || "");
+          setBusiness(agentData.business || "");
+          setContact(agentData.phone || "");
+
+          setLoading(false);
+        }
+      } catch (error) {
+        alert(error);
+      }
+    };
+
+    fetchAgent(id);
+  }, [id]);
+
+  const onSubmit = async () => {
     const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
     const token = localStorage.getItem("token");
 
     try {
       setLoading(true);
-      const res = await axios.put(`${baseUrl}/api/v1/agents/${agentId}`, data, {
+      const res = await axios.put(`${baseUrl}/api/v1/agents/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -106,7 +106,7 @@ export const EditAgent = ({ onClose, agentId }) => {
                 {...register("fullname")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="john"
-                value={name}
+                value={fullname}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
