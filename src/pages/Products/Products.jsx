@@ -1,48 +1,22 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useContext } from "react";
 
 import { columns } from "./ProductColumn";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
-import axios from "axios";
 import { AddProduct } from "../../components/FormEvents/ProductForms/AddProducts";
 import { IoMdAdd } from "react-icons/io";
+import { Context } from "../../Context/Context";
 
 export const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showAddProduct, setShowAddProduct] = useState(false);
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    fetchAgent(newPage);
-  };
-
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-
-  const fetchProducts = async (page) => {
-    const token = localStorage.getItem("token");
-    try {
-      setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/products?page=${page}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.status === 200) {
-        const response = await res.data;
-        console.log(response);
-
-        setProducts(response.data);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {
+    products,
+    loading,
+    currentPage,
+    showAddProduct,
+    setShowAddProduct,
+    handlePageChange,
+    fetchProducts,
+  } = useContext(Context);
 
   useEffect(() => {
     fetchProducts(currentPage);

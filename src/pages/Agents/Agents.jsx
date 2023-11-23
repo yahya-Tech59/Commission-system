@@ -1,48 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
-import axios from "axios";
 import { AddAgent } from "../../components/FormEvents/AgentForms/AddAgent";
 import { IoMdAdd } from "react-icons/io";
+import { Context } from "../../Context/Context";
 
 export const Agents = () => {
-  const [agents, setAgents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showAddAgent, setShowAddAgent] = useState(false);
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    fetchAgent(newPage);
-  };
-
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-
-  const fetchAgent = async (page) => {
-    const token = localStorage.getItem("token");
-    try {
-      setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/agents?page=${page}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.status === 200) {
-        const response = await res.data;
-        console.log(response);
-
-        setAgents(response.data);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {
+    agents,
+    loading,
+    currentPage,
+    showAddAgent,
+    setShowAddAgent,
+    handlePageChange,
+    fetchAgent,
+  } = useContext(Context);
 
   useEffect(() => {
     fetchAgent(currentPage);

@@ -40,10 +40,10 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
 
         if (res.status === 200) {
           const agentData = res.data[0];
-          setFullName(agentData.fullname || "");
-          setDescription(agentData.description || "");
-          setBusiness(agentData.business || "");
-          setContact(agentData.phone || "");
+          setFullName(agentData?.fullname || "");
+          setDescription(agentData?.description || "");
+          setBusiness(agentData?.business || "");
+          setContact(agentData?.phone || "");
 
           setLoading(false);
         }
@@ -102,12 +102,12 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
             <div className="flex flex-col gap-1">
               <label>Name</label>
               <input
-                type="text"
+                type="text" 
                 {...register("fullname")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="john"
                 value={fullname}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setFullName(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-1">

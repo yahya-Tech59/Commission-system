@@ -11,7 +11,7 @@ export const columns = [
   },
   {
     header: "Prod_Name",
-    accessorKey: "product_name",
+    accessorKey: "name",
   },
   {
     header: "Price",

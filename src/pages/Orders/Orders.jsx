@@ -1,51 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 
 import { columns } from "./OrderColumns";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
-import axios from "axios";
 import { AddOrder } from "../../components/FormEvents/OrderForms/AddOrder";
 import { IoMdAdd } from "react-icons/io";
+import { Context } from "../../Context/Context";
 
 export const Orders = () => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showAddOrder, setShowAddOrder] = useState(false);
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    fetchAgent(newPage);
-  };
-
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-
-  const fetchCustomer = async (page) => {
-    const token = localStorage.getItem("token");
-    try {
-      setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/orders?page=${page}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.status === 200) {
-        const response = await res.data;
-        console.log(response);
-
-        setOrders(response.data);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {
+    orders,
+    loading,
+    currentPage,
+    showAddOrder,
+    setShowAddOrder,
+    handlePageChange,
+    fetchOrder,
+  } = useContext(Context);
 
   useEffect(() => {
-    fetchCustomer(currentPage);
+    fetchOrder(currentPage);
   }, [currentPage]);
 
   if (loading === true) {
