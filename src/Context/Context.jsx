@@ -1,67 +1,122 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import axios from "axios";
 
-// export const initialState = {
-//   loading: true,
-//   currentPage: 1,
-//   agents: [],
-//   customers: [],
-//   orders: [],
-//   products: [],
-//   users: [],
-//   showAddAgent: false,
-//   showAddCustomer: false,
-//   showAddOrder: false,
-//   showAddProduct: false,
-//   showAddUser: false,
-// };
+export const initialState = {
+  loading: true,
+  currentPage: 1,
+  agents: [],
+  customers: [],
+  orders: [],
+  products: [],
+  users: [],
+  showAddAgent: false,
+  showAddCustomer: false,
+  showAddOrder: false,
+  showAddProduct: false,
+  showAddUser: false,
+};
 
-// export const Action_Types = {
-//   SET_LOADING: "SET_LOADING",
-//   SET_CURRENT_PAGE: "SET_CURRENT_PAGE",
-//   SET_AGENTS: "SET_AGENTS",
-//   SET_CUSTOMERS: "SET_CUSTOMERS",
-//   SET_ORDERS: "SET_ORDERS",
-//   SET_PRODUCTS: "SET_PRODUCTS",
-//   SET_USERS: "SET_USERS",
-//   SET_SHOW_ADD_AGENT: "SET_SHOW_ADD_AGENT",
-//   SET_SHOW_ADD_CUSTOMER: "SET_SHOW_ADD_CUSTOMER",
-//   SET_SHOW_ADD_ORDER: "SET_SHOW_ADD_ORDER",
-//   SET_SHOW_ADD_PRODUCT: "SET_SHOW_ADD_PRODUCT",
-//   SET_SHOW_ADD_USER: "SET_SHOW_ADD_USER",
-// };
+export const Action_Types = {
+  setLoading: "setLoading",
+  setCurrentPage: "setCurrentPage",
+  setAgents: "SetAgents",
+  setCustomers: "setCustomers",
+  setOrders: "setOrderS",
+  setProducts: "setProducts",
+  setUsers: "setUsers",
+  setShowAddAgent: "setShowAddAgent",
+  setShowAddCustomer: "setShowAddCustomer",
+  setShowAddOrder: "setShowAddOrder",
+  setShowAddProduct: "setShowAddProduct",
+  setShowAddUser: "setShowAddUser",
+};
 
-// export const reducer = (state, action) = {
-//   const {type, payload} = action();
-// }
+export const reducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case Action_Types.setLoading:
+      return { ...state, loading: payload };
+    case Action_Types.setCurrentPage:
+      return { ...state, currentPage: payload };
+    case Action_Types.setAgents:
+      return { ...state, agents: payload };
+    case Action_Types.setCustomers:
+      return { ...state, customers: payload };
+    case Action_Types.setOrders:
+      return { ...state, orders: payload };
+    case Action_Types.setProducts:
+      return { ...state, products: payload };
+    case Action_Types.setUsers:
+      return { ...state, users: payload };
+    case Action_Types.setShowAddAgent:
+      return { ...state, showAddAgent: payload };
+    case Action_Types.setShowAddCustomer:
+      return { ...state, showAddCustomer: payload };
+    case Action_Types.setShowAddOrder:
+      return { ...state, showAddOrder: payload };
+    case Action_Types.setShowAddProduct:
+      return { ...state, showAddProduct: payload };
+    case Action_Types.setShowAddUser:
+      return { ...state, showAddUser: payload };
+
+    default:
+      throw new Error(`Unknown action type: ${type}`);
+  }
+};
 
 export const Context = createContext();
 
 export const ContextProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [agents, setAgents] = useState([]);
-  const [customers, setCustomers] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [showAddAgent, setShowAddAgent] = useState(false);
-  const [showAddCustomer, setShowAddCustomer] = useState(false);
-  const [showAddOrder, setShowAddOrder] = useState(false);
-  const [showAddProduct, setShowAddProduct] = useState(false);
-  const [showAddUser, setShowAddUser] = useState(false);
+  // const [loading, setLoading] = useState(true);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [agents, setAgents] = useState([]);
+  // const [customers, setCustomers] = useState([]);
+  // const [orders, setOrders] = useState([]);
+  // const [products, setProducts] = useState([]);
+  // const [users, setUsers] = useState([]);
+  // const [showAddAgent, setShowAddAgent] = useState(false);
+  // const [showAddCustomer, setShowAddCustomer] = useState(false);
+  // const [showAddOrder, setShowAddOrder] = useState(false);
+  // const [showAddProduct, setShowAddProduct] = useState(false);
+  // const [showAddUser, setShowAddUser] = useState(false);
+
+  const [
+    {
+      loading,
+      currentPage,
+      agents,
+      showAddAgent,
+      setShowAddAgent,
+      customers,
+      showAddCustomer,
+      setShowAddCustomer,
+      orders,
+      showAddOrder,
+      setShowAddOrder,
+      products,
+      showAddProduct,
+      setShowAddProduct,
+      users,
+      showAddUser,
+      setShowAddUser,
+    },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    // setCurrentPage(newPage);
+    dispatch({ type: Action_Types.setCurrentPage, payload: newPage });
     fetchAgent(newPage);
   };
 
   const fetchAgent = async (page) => {
     const token = localStorage.getItem("token");
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch({ type: Action_Types.setLoading, payload: true });
       const res = await axios.get(`${baseUrl}/api/v1/agents?page=${page}`, {
         headers: {
           "Content-Type": "application/json",
@@ -74,8 +129,10 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        setAgents(response.data);
-        setLoading(false);
+        // setAgents(response.data);
+        dispatch({ type: Action_Types.setAgents, payload: response.data });
+        // setLoading(false);
+        dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
       console.log(err);
@@ -86,7 +143,7 @@ export const ContextProvider = ({ children }) => {
   const fetchCustomer = async (page) => {
     const token = localStorage.getItem("token");
     try {
-      setLoading(true);
+      dispatch({ type: Action_Types.setLoading, payload: true });
       const res = await axios.get(`${baseUrl}/api/v1/customers?page=${page}`, {
         headers: {
           "Content-Type": "application/json",
@@ -99,8 +156,11 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        setCustomers(response.data);
-        setLoading(false);
+        // setCustomers(response.data);
+        dispatch({ type: Action_Types.setCustomers, payload: response.data });
+
+        // setLoading(false);
+        dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
       console.log(err);
@@ -111,7 +171,9 @@ export const ContextProvider = ({ children }) => {
   const fetchOrder = async (page) => {
     const token = localStorage.getItem("token");
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch({ type: Action_Types.setLoading, payload: true });
+
       const res = await axios.get(`${baseUrl}/api/v1/orders?page=${page}`, {
         headers: {
           "Content-Type": "application/json",
@@ -124,8 +186,11 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        setOrders(response.data);
-        setLoading(false);
+        // setOrders(response.data);
+        dispatch({ type: Action_Types.setOrders, payload: response.data });
+
+        // setLoading(false);
+        dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
       console.log(err);
@@ -136,7 +201,9 @@ export const ContextProvider = ({ children }) => {
   const fetchProducts = async (page) => {
     const token = localStorage.getItem("token");
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch({ type: Action_Types.setLoading, payload: true });
+
       const res = await axios.get(`${baseUrl}/api/v1/products?page=${page}`, {
         headers: {
           "Content-Type": "application/json",
@@ -149,8 +216,11 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        setProducts(response.data);
-        setLoading(false);
+        // setProducts(response.data);
+        dispatch({ type: Action_Types.setProducts, payload: response.data });
+
+        // setLoading(false);
+        dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
       console.log(err);
@@ -161,7 +231,9 @@ export const ContextProvider = ({ children }) => {
   const fetchUsers = async (page) => {
     const token = localStorage.getItem("token");
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch({ type: Action_Types.setLoading, payload: true });
+
       const res = await axios.get(`${baseUrl}/api/v1/users?page=${page}`, {
         headers: {
           "Content-Type": "application/json",
@@ -174,8 +246,11 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        setUsers(response.data);
-        setLoading(false);
+        // setUsers(response.data);
+        dispatch({ type: Action_Types.setUsers, payload: response.data });
+
+        // setLoading(false);
+        dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
       console.log(err);
