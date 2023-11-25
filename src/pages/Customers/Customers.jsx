@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import { columns } from "./CustomerColumns";
 import { Header } from "../../components/Header";
@@ -8,15 +8,10 @@ import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 
 export const Customers = () => {
-  const {
-    customers,
-    loading,
-    currentPage,
-    showAddCustomer,
-    setShowAddCustomer,
-    handlePageChange,
-    fetchCustomer,
-  } = useContext(Context);
+  const [showAddCustomer, setShowAddCustomer] = useState(false);
+
+  const { customers, loading, currentPage, handlePageChange, fetchCustomer } =
+    useContext(Context);
 
   useEffect(() => {
     fetchCustomer(currentPage);

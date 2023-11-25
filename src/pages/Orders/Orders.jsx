@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { columns } from "./OrderColumns";
 import { Header } from "../../components/Header";
@@ -8,15 +8,9 @@ import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 
 export const Orders = () => {
-  const {
-    orders,
-    loading,
-    currentPage,
-    showAddOrder,
-    setShowAddOrder,
-    handlePageChange,
-    fetchOrder,
-  } = useContext(Context);
+  const [showAddOrder, setShowAddOrder] = useState(false);
+  const { orders, loading, currentPage, handlePageChange, fetchOrder } =
+    useContext(Context);
 
   useEffect(() => {
     fetchOrder(currentPage);

@@ -6,7 +6,7 @@ export const Footer = () => {
       <h1>Privacy Policy</h1>
       <h1>Terms of use</h1>
 
-      <p className="ml-[70rem]">@ 2022 CawaaleICT</p>
+      <p className="ml-[70rem]">@ 2023 CawaaleICT</p>
     </div>
   );
 };

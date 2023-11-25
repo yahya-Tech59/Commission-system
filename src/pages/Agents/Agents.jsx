@@ -8,15 +8,9 @@ import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 
 export const Agents = () => {
-  const {
-    agents,
-    loading,
-    currentPage,
-    showAddAgent,
-    setShowAddAgent,
-    handlePageChange,
-    fetchAgent,
-  } = useContext(Context);
+  const [showAddAgent, setShowAddAgent] = useState(false);
+  const { agents, loading, currentPage, handlePageChange, fetchAgent } =
+    useContext(Context);
 
   useEffect(() => {
     fetchAgent(currentPage);

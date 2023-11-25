@@ -4,6 +4,8 @@ import axios from "axios";
 export const DeleteAgent = ({ id, onClose }) => {
   const [loading, setLoading] = useState(false);
 
+  console.log("delete works");
+
   const deleteAgent = async () => {
     const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
     const token = localStorage.getItem("token");
@@ -20,18 +22,17 @@ export const DeleteAgent = ({ id, onClose }) => {
 
       if (res.status === 200) {
         alert("deleted successfuly");
-        onClose();
         setLoading(false);
+        onClose();
       }
     } catch (error) {
       alert(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (id) {
-      deleteAgent(id);
-    }
+    deleteAgent();
   }, [id]);
   //   return (
   //     <div className="flex items-center justify-center h-full">

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { columns } from "./UserColumns";
 import { Header } from "../../components/Header";
@@ -8,18 +8,12 @@ import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 
 export const Users = () => {
-  const {
-    users,
-    loading,
-    currentPage,
-    showAddUser,
-    setShowAddUser,
-    handlePageChange,
-    fetchUsers,
-  } = useContext(Context);
+  const [showAddUser, setShowAddUser] = useState(false);
+  const { users, loading, currentPage, handlePageChange, fetchUser } =
+    useContext(Context);
 
   useEffect(() => {
-    fetchUsers(currentPage);
+    fetchUser(currentPage);
   }, [currentPage]);
 
   if (loading === true) {

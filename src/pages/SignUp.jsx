@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,8 +7,9 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { hope } from "../assets/img";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { Context } from "../Context/Context";
+import axios from "axios";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -16,9 +17,9 @@ export const SignUp = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+
   const schema = yup.object().shape({
-    // firstname: yup.string().required(),
-    // lastname: yup.string().required(),
     name: yup.string().required("name is required"),
     email: yup.string().email().required(),
     password: yup.string().min(4).max(15).required(),
@@ -33,9 +34,7 @@ export const SignUp = () => {
   });
   const { errors } = formState;
 
-  const onSubmit = async (data) => {
-    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-
+  const fetchRegister = async (data) => {
     try {
       setLoading(true);
       const res = await axios.post(`${baseUrl}/api/auth/register`, data);
@@ -47,18 +46,18 @@ export const SignUp = () => {
       }
       setLoading(false);
     } catch (error) {
-      alert(error.data);
+      alert(error);
     }
   };
 
-  if (loading === true) {
+  if (loading === false) {
     return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
   }
   return (
     <div className="flex bg-slate-100">
       <img src={hope} alt="" className="h-screen" />
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(fetchRegister)}
         className="flex flex-col ml-56 mr-80 mb-12 mt-32 gap-1 bg-white shadow-slate-300 shadow-sm w-[60rem] h-[42rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">

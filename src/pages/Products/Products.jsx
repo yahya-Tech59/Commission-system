@@ -8,18 +8,13 @@ import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 
 export const Products = () => {
-  const {
-    products,
-    loading,
-    currentPage,
-    showAddProduct,
-    setShowAddProduct,
-    handlePageChange,
-    fetchProducts,
-  } = useContext(Context);
+  const [showAddProduct, setShowAddProduct] = useState(false);
+
+  const { products, loading, currentPage, handlePageChange, fetchProduct } =
+    useContext(Context);
 
   useEffect(() => {
-    fetchProducts(currentPage);
+    fetchProduct(currentPage);
   }, [currentPage]);
 
   if (loading === true) {

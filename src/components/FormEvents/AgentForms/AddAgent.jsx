@@ -23,39 +23,39 @@ export const AddAgent = ({ onClose }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
+  const addAgent = async (data) => {
     const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
     const token = localStorage.getItem("token");
 
     try {
       setLoading(true);
-      const res = await axios
-        .post(`${baseUrl}/api/v1/agents`, data, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((result) => result.res.data.json());
+      const res = await axios.post(`${baseUrl}/api/v1/agents`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      if (res.status === 200) {
-        alert("Agent Resgistered successful");
+      if (res.status === 201) {
+        alert("Agent Registered successfully");
+        console.log(res);
         setLoading(false);
       }
     } catch (error) {
-      alert(error);
+      alert(error.message); // Use error.message to get the error message
+      setLoading(false);
     }
   };
 
-  if (loading === true) {
-    return <h1 className="text-3xl font-semibold ">Loading...</h1>;
-  }
+  // if (loading === true) {
+  //   return <h1 className="text-3xl font-semibold ">Loading...</h1>;
+  // }
 
   return (
     <div className="flex bg-slate-100">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(addAgent)}
         className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[38rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">

@@ -4,13 +4,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { IoCloseOutline } from "react-icons/io5";
+import { useParams } from "react-router-dom";
 
-export const EditAgent = ({ onClose, id, deleteAgent }) => {
-  const [fullname, setFullName] = useState();
-  const [description, setDescription] = useState();
-  const [business, setBusiness] = useState();
-  const [contact, setContact] = useState();
+export const EditAgent = ({ onClose, id }) => {
   const [loading, setLoading] = useState(false);
+  const [fullname, setFullName] = useState("");
+  const [description, setDescription] = useState("");
+  const [business, setBusiness] = useState("");
+  const [phone, setPhone] = useState("");
 
   const schema = yup.object().shape({
     fullname: yup.string().required(),
@@ -23,14 +24,14 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    const fetchAgent = async () => {
-      const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-      const token = localStorage.getItem("token");
+  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+  const token = localStorage.getItem("token");
 
+  useEffect(() => {
+    const fetchEditAgent = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${baseUrl}/api/v1/agents/${id}`, {
+        const res = await axios.get(`${baseUrl}/api/v1/agents/${id}/edit`, {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -43,8 +44,7 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
           setFullName(agentData?.fullname || "");
           setDescription(agentData?.description || "");
           setBusiness(agentData?.business || "");
-          setContact(agentData?.phone || "");
-
+          setPhone(agentData?.phone || "");
           setLoading(false);
         }
       } catch (error) {
@@ -52,16 +52,13 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
       }
     };
 
-    fetchAgent(id);
+    fetchEditAgent(id);
   }, [id]);
 
-  const onSubmit = async () => {
-    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-    const token = localStorage.getItem("token");
-
+  const editAgent = async (data) => {
     try {
       setLoading(true);
-      const res = await axios.put(`${baseUrl}/api/v1/agents/${id}`, {
+      const res = await axios.put(`${baseUrl}/api/v1/agents/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -71,9 +68,12 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
 
       if (res.status === 200) {
         alert("updated Successfuly");
+        setLoading(false);
+        onClose();
       }
     } catch (error) {
       alert(error);
+      setLoading(false);
     }
   };
 
@@ -84,8 +84,8 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
   return (
     <div className="flex bg-slate-100">
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[38rem] rounded-xl p-3"
+        onSubmit={handleSubmit(editAgent)}
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[38rem] rounded-lg p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
@@ -102,7 +102,7 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
             <div className="flex flex-col gap-1">
               <label>Name</label>
               <input
-                type="text" 
+                type="text"
                 {...register("fullname")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="john"
@@ -140,8 +140,8 @@ export const EditAgent = ({ onClose, id, deleteAgent }) => {
                 {...register("phone")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="123456789"
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </div>
           </div>

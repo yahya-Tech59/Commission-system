@@ -33,23 +33,33 @@ export const columns = [
       const [showDeleteAgent, setShowDeleteAgent] = useState(false);
       const [id, setId] = useState([]);
 
+      const handleEdit = () => {
+        setId(row.id); // Set the id when the delete button is clicked
+        setShowEditAgent(true);
+      };
+
+      const handleDelete = () => {
+        setId(row.id); // Set the id when the edit button is clicked
+        setShowDeleteAgent(true);
+      };
+
       return (
         <div className="flex space-x-4 hover:text-black ">
           <button
-            onClick={() => setShowEditAgent(true)}
+            onClick={handleEdit}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiEditLine />
           </button>
           <button
-            onClick={() => setShowDeleteAgent(true)}
+            onClick={handleDelete}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiDeleteBin2Line />
           </button>
 
           {showEditAgent && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+            <div className="absolute top-0 left-0 bottom-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
               <EditAgent onClose={() => setShowEditAgent(false)} id={id} />
             </div>
           )}

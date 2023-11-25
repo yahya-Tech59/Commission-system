@@ -32,7 +32,7 @@ export const SignIn = () => {
   });
   const { errors } = formState;
 
-  const onSubmit = async (data) => {
+  const fetchLogin = async (data) => {
     try {
       setLoading(true);
       const res = await axios.post(`${baseUrl}/api/auth/login`, data);
@@ -58,7 +58,7 @@ export const SignIn = () => {
     <div className="flex bg-slate-100">
       <img src={hope} alt="" className="h-screen" />
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(fetchLogin)}
         className="flex flex-col ml-[16rem] mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[65rem] h-[43rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">

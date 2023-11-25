@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import { cart, heart, notif } from "../assets/img";
@@ -13,30 +13,21 @@ import { BsFillExclamationCircleFill } from "react-icons/bs";
 
 import { user } from "../assets/img";
 import { NavLink } from "react-router-dom";
+import { Context } from "../Context/Context";
 
 export const Sidebar = () => {
-  const [sidebarOpen, setsidebarOpen] = useState(true);
+  const { sidebarOpen, handleOpen, handleClose } = useContext(Context);
 
-  const handleOpen = () => {
-    setsidebarOpen(true);
-  };
-
-  const handleClose = () => {
-    setsidebarOpen(false);
-  };
-
-  // className={`navlink ${activeNavLink === "/" ? "navlink-active" : ""}`}
-  // flex text-slate-500 hover:text-blue-600 border-l-4 border-transparent hover:border-blue-500 active:bg-zinc-200
   return (
     <div>
       {!sidebarOpen ? (
         <div onClick={handleOpen}>
-          <FaBars className="text-3xl ml-10 mt-5 " />
+          <FaBars className="text-3xl ml-10 mt-5 cursor-pointer " />
         </div>
       ) : (
         <div className="w-72 h-screen shadow-slate-400 shadow-md bg-white ">
           <div onClick={handleClose}>
-            <BsFillArrowLeftCircleFill className="text-blue-700 text-2xl ml-[275px] relative top-10 " />
+            <BsFillArrowLeftCircleFill className="text-blue-700 text-2xl ml-[275px] relative top-10 cursor-pointer " />
           </div>
           <h1 className="text-3xl text-center relativeIoNotificationsSharp top-4">
             Billing System

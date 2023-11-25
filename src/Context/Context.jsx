@@ -1,7 +1,8 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer } from "react";
 import axios from "axios";
 
 export const initialState = {
+  sidebarOpen: true,
   loading: true,
   currentPage: 1,
   agents: [],
@@ -9,7 +10,6 @@ export const initialState = {
   orders: [],
   products: [],
   users: [],
-  showAddAgent: false,
   showAddCustomer: false,
   showAddOrder: false,
   showAddProduct: false,
@@ -17,6 +17,7 @@ export const initialState = {
 };
 
 export const Action_Types = {
+  setsidebarOpen: "setsidebarOpen",
   setLoading: "setLoading",
   setCurrentPage: "setCurrentPage",
   setAgents: "SetAgents",
@@ -24,17 +25,14 @@ export const Action_Types = {
   setOrders: "setOrderS",
   setProducts: "setProducts",
   setUsers: "setUsers",
-  setShowAddAgent: "setShowAddAgent",
-  setShowAddCustomer: "setShowAddCustomer",
-  setShowAddOrder: "setShowAddOrder",
-  setShowAddProduct: "setShowAddProduct",
-  setShowAddUser: "setShowAddUser",
 };
 
 export const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case Action_Types.setsidebarOpen:
+      return { ...state, sidebarOpen: payload };
     case Action_Types.setLoading:
       return { ...state, loading: payload };
     case Action_Types.setCurrentPage:
@@ -49,16 +47,6 @@ export const reducer = (state, action) => {
       return { ...state, products: payload };
     case Action_Types.setUsers:
       return { ...state, users: payload };
-    case Action_Types.setShowAddAgent:
-      return { ...state, showAddAgent: payload };
-    case Action_Types.setShowAddCustomer:
-      return { ...state, showAddCustomer: payload };
-    case Action_Types.setShowAddOrder:
-      return { ...state, showAddOrder: payload };
-    case Action_Types.setShowAddProduct:
-      return { ...state, showAddProduct: payload };
-    case Action_Types.setShowAddUser:
-      return { ...state, showAddUser: payload };
 
     default:
       throw new Error(`Unknown action type: ${type}`);
@@ -75,45 +63,40 @@ export const ContextProvider = ({ children }) => {
   // const [orders, setOrders] = useState([]);
   // const [products, setProducts] = useState([]);
   // const [users, setUsers] = useState([]);
-  // const [showAddAgent, setShowAddAgent] = useState(false);
-  // const [showAddCustomer, setShowAddCustomer] = useState(false);
-  // const [showAddOrder, setShowAddOrder] = useState(false);
-  // const [showAddProduct, setShowAddProduct] = useState(false);
-  // const [showAddUser, setShowAddUser] = useState(false);
 
   const [
     {
+      sidebarOpen,
       loading,
       currentPage,
       agents,
-      showAddAgent,
-      setShowAddAgent,
       customers,
-      showAddCustomer,
-      setShowAddCustomer,
       orders,
-      showAddOrder,
-      setShowAddOrder,
       products,
-      showAddProduct,
-      setShowAddProduct,
       users,
-      showAddUser,
-      setShowAddUser,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+  const handleOpen = () => {
+    // setsidebarOpen(true);
+    dispatch({ type: Action_Types.setsidebarOpen, payload: true });
+  };
+
+  const handleClose = () => {
+    // setsidebarOpen(false);
+    dispatch({ type: Action_Types.setsidebarOpen, payload: false });
+  };
 
   const handlePageChange = (newPage) => {
     // setCurrentPage(newPage);
     dispatch({ type: Action_Types.setCurrentPage, payload: newPage });
-    fetchAgent(newPage);
   };
 
+  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+  const token = localStorage.getItem("token");
+
   const fetchAgent = async (page) => {
-    const token = localStorage.getItem("token");
     try {
       // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
@@ -127,7 +110,7 @@ export const ContextProvider = ({ children }) => {
 
       if (res.status === 200) {
         const response = await res.data;
-        console.log(response);
+        // console.log(response);
 
         // setAgents(response.data);
         dispatch({ type: Action_Types.setAgents, payload: response.data });
@@ -141,7 +124,6 @@ export const ContextProvider = ({ children }) => {
 
   //FetchCustomer
   const fetchCustomer = async (page) => {
-    const token = localStorage.getItem("token");
     try {
       dispatch({ type: Action_Types.setLoading, payload: true });
       const res = await axios.get(`${baseUrl}/api/v1/customers?page=${page}`, {
@@ -169,7 +151,6 @@ export const ContextProvider = ({ children }) => {
 
   //FetchOrder
   const fetchOrder = async (page) => {
-    const token = localStorage.getItem("token");
     try {
       // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
@@ -198,8 +179,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   //FetchProducts
-  const fetchProducts = async (page) => {
-    const token = localStorage.getItem("token");
+  const fetchProduct = async (page) => {
     try {
       // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
@@ -228,8 +208,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   //FetchUsers
-  const fetchUsers = async (page) => {
-    const token = localStorage.getItem("token");
+  const fetchUser = async (page) => {
     try {
       // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
@@ -258,29 +237,22 @@ export const ContextProvider = ({ children }) => {
   };
 
   const value = {
+    sidebarOpen,
+    handleOpen,
+    handleClose,
     loading,
     currentPage,
     agents,
-    showAddAgent,
-    setShowAddAgent,
     handlePageChange,
     fetchAgent,
     customers,
     fetchCustomer,
-    showAddCustomer,
-    setShowAddCustomer,
     orders,
     fetchOrder,
-    showAddOrder,
-    setShowAddOrder,
     products,
-    fetchProducts,
-    showAddProduct,
-    setShowAddProduct,
+    fetchProduct,
     users,
-    fetchUsers,
-    showAddUser,
-    setShowAddUser,
+    fetchUser,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
