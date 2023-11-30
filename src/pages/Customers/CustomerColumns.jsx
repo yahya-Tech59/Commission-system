@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { EditCustomer } from "../../components/FormEvents/CustomerForms/EditCustomer";
-import { DeleteCustomer } from "../../components/FormEvents/CustomerForms/DeleteCustomer";
+import { EditCustomer } from "../../components/Models/CustomerForms/EditCustomer";
+import { DeleteCustomer } from "../../components/Models/CustomerForms/DeleteCustomer";
 
 export const columns = [
   {

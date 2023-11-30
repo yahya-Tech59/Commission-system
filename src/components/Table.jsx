@@ -8,10 +8,16 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { CiSearch } from "react-icons/ci";
+import { RiEditLine } from "react-icons/ri";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import { EditAgent } from "../components/Models/AgentForms/EditAgent";
+import { DeleteAgent } from "../components/Models/AgentForms/DeleteAgent";
 
 export const Table = ({ data, columns }) => {
   const [sorting, setsorting] = useState([]);
   const [filter, setfilter] = useState("");
+  const [showEditAgent, setShowEditAgent] = useState(false);
+  const [showDeleteAgent, setShowDeleteAgent] = useState(false);
 
   const table = useReactTable({
     data,

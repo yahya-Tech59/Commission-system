@@ -1,10 +1,14 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useMemo } from "react";
 
-import { columns } from "./AgentColumns";
+ import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
-import { Table } from "../../components/Table";
-import { AddAgent } from "../../components/FormEvents/AgentForms/AddAgent";
+// import { Table } from "../../components/Table";
+import { AddAgent } from "../../components/Models/AgentForms/AddAgent";
 import { IoMdAdd } from "react-icons/io";
+import { DataGrid } from "@mui/x-data-grid";
+// import { RiEditLine, RiDeleteBin2Line } from "react-icons/ri";
+// import { EditAgent } from "../../components/Models/AgentForms/EditAgent";
+// import { DeleteAgent } from "../../components/Models/AgentForms/DeleteAgent";
 import { Context } from "../../Context/Context";
 
 export const Agents = () => {
@@ -19,17 +23,18 @@ export const Agents = () => {
   if (loading === true) {
     return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
   }
+   
 
   return (
     <div className="ml-10">
       <Header />
-      <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg ">
+      <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg pb-3 ">
         <h2 className="text-3xl pt-6 ml-7">Agents</h2>
 
-        <div className="ml-[70rem] mb-[-5rem] ">
+        <div className="ml-[80rem] -mt-10 mb-4 ">
           <button
             onClick={() => setShowAddAgent(true)}
-            className=" flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "
+            className="absolute flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "
           >
             Add Agent
             <IoMdAdd className=" text-2xl" />
@@ -41,9 +46,11 @@ export const Agents = () => {
           )}
         </div>
 
-        <Table data={agents} columns={columns} />
+        <div style={{ height: 630, width: "95%" }} className="ml-10 mt-20  ">
+          <DataGrid rows={agents} columns={columns} getRowId={row => row.id} />
+        </div>
 
-        <div className="ml-[76rem] pb-3">
+        <div className="ml-[76rem] mt-3 pb-3">
           <button
             onClick={() => handlePageChange(currentPage === 20)}
             className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"

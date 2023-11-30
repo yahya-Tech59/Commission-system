@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+// import { Context } from "../../../Context/Context";
 
 export const DeleteAgent = ({ id, onClose }) => {
   const [loading, setLoading] = useState(false);
 
-  console.log("delete works");
+  // const { id } = useContext(Context);
+
+  console.log("delete works", id);
 
   const deleteAgent = async () => {
     const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";

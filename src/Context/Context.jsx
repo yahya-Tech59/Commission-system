@@ -14,6 +14,7 @@ export const initialState = {
   showAddOrder: false,
   showAddProduct: false,
   showAddUser: false,
+  id: null,
 };
 
 export const Action_Types = {
@@ -25,6 +26,7 @@ export const Action_Types = {
   setOrders: "setOrderS",
   setProducts: "setProducts",
   setUsers: "setUsers",
+  setId: "setId",
 };
 
 export const reducer = (state, action) => {
@@ -47,6 +49,8 @@ export const reducer = (state, action) => {
       return { ...state, products: payload };
     case Action_Types.setUsers:
       return { ...state, users: payload };
+    case Action_Types.setId:
+      return { ...state, id: payload };
 
     default:
       throw new Error(`Unknown action type: ${type}`);
@@ -74,6 +78,8 @@ export const ContextProvider = ({ children }) => {
       orders,
       products,
       users,
+      id,
+      setId,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -92,6 +98,10 @@ export const ContextProvider = ({ children }) => {
     // setCurrentPage(newPage);
     dispatch({ type: Action_Types.setCurrentPage, payload: newPage });
   };
+
+  // const handleSetId = (row) => {
+  //   setId(row.id);
+  // };
 
   const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
   const token = localStorage.getItem("token");
@@ -253,6 +263,8 @@ export const ContextProvider = ({ children }) => {
     fetchProduct,
     users,
     fetchUser,
+    id,
+    setId: (newId) => dispatch({ type: Action_Types.setId, payload: newId }), // <-- Include setId in the context,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
