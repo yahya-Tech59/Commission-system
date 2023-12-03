@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { columns } from "./OrderColumns";
 import { Header } from "../../components/Header";
 import { Table } from "../../components/Table";
-import { AddOrder } from "../../components/Models/OrderForms/AddOrder";
+import { AddOrder } from "../../Models/OrderForms/AddOrder";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 

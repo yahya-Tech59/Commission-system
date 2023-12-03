@@ -4,6 +4,7 @@ import axios from "axios";
 export const initialState = {
   sidebarOpen: true,
   loading: true,
+  perPage: 10,
   currentPage: 1,
   agents: [],
   customers: [],
@@ -14,19 +15,18 @@ export const initialState = {
   showAddOrder: false,
   showAddProduct: false,
   showAddUser: false,
-  id: null,
 };
 
 export const Action_Types = {
   setsidebarOpen: "setsidebarOpen",
   setLoading: "setLoading",
+  setPerPage: "setPerPage",
   setCurrentPage: "setCurrentPage",
   setAgents: "SetAgents",
   setCustomers: "setCustomers",
   setOrders: "setOrderS",
   setProducts: "setProducts",
   setUsers: "setUsers",
-  setId: "setId",
 };
 
 export const reducer = (state, action) => {
@@ -37,6 +37,8 @@ export const reducer = (state, action) => {
       return { ...state, sidebarOpen: payload };
     case Action_Types.setLoading:
       return { ...state, loading: payload };
+    case Action_Types.setPerPage:
+      return { ...state, perPage: payload };
     case Action_Types.setCurrentPage:
       return { ...state, currentPage: payload };
     case Action_Types.setAgents:
@@ -49,8 +51,6 @@ export const reducer = (state, action) => {
       return { ...state, products: payload };
     case Action_Types.setUsers:
       return { ...state, users: payload };
-    case Action_Types.setId:
-      return { ...state, id: payload };
 
     default:
       throw new Error(`Unknown action type: ${type}`);
@@ -60,57 +60,40 @@ export const reducer = (state, action) => {
 export const Context = createContext();
 
 export const ContextProvider = ({ children }) => {
-  // const [loading, setLoading] = useState(true);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [agents, setAgents] = useState([]);
-  // const [customers, setCustomers] = useState([]);
-  // const [orders, setOrders] = useState([]);
-  // const [products, setProducts] = useState([]);
-  // const [users, setUsers] = useState([]);
-
   const [
     {
       sidebarOpen,
       loading,
+      perPage,
       currentPage,
       agents,
       customers,
       orders,
       products,
       users,
-      id,
-      setId,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
 
   const handleOpen = () => {
-    // setsidebarOpen(true);
     dispatch({ type: Action_Types.setsidebarOpen, payload: true });
   };
 
   const handleClose = () => {
-    // setsidebarOpen(false);
     dispatch({ type: Action_Types.setsidebarOpen, payload: false });
   };
 
   const handlePageChange = (newPage) => {
-    // setCurrentPage(newPage);
     dispatch({ type: Action_Types.setCurrentPage, payload: newPage });
   };
-
-  // const handleSetId = (row) => {
-  //   setId(row.id);
-  // };
 
   const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
   const token = localStorage.getItem("token");
 
-  const fetchAgent = async (page) => {
+  const fetchAgent = async () => {
     try {
-      // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
-      const res = await axios.get(`${baseUrl}/api/v1/agents?page=${page}`, {
+      const res = await axios.get(`${baseUrl}/api/v1/agents?page=${perPage}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -120,11 +103,8 @@ export const ContextProvider = ({ children }) => {
 
       if (res.status === 200) {
         const response = await res.data;
-        // console.log(response);
 
-        // setAgents(response.data);
         dispatch({ type: Action_Types.setAgents, payload: response.data });
-        // setLoading(false);
         dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
@@ -133,7 +113,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   //FetchCustomer
-  const fetchCustomer = async (page) => {
+  const fetchCustomer = async () => {
     try {
       dispatch({ type: Action_Types.setLoading, payload: true });
       const res = await axios.get(`${baseUrl}/api/v1/customers?page=${page}`, {
@@ -148,10 +128,8 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        // setCustomers(response.data);
         dispatch({ type: Action_Types.setCustomers, payload: response.data });
 
-        // setLoading(false);
         dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
@@ -162,7 +140,6 @@ export const ContextProvider = ({ children }) => {
   //FetchOrder
   const fetchOrder = async (page) => {
     try {
-      // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
 
       const res = await axios.get(`${baseUrl}/api/v1/orders?page=${page}`, {
@@ -177,10 +154,8 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        // setOrders(response.data);
         dispatch({ type: Action_Types.setOrders, payload: response.data });
 
-        // setLoading(false);
         dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
@@ -191,7 +166,6 @@ export const ContextProvider = ({ children }) => {
   //FetchProducts
   const fetchProduct = async (page) => {
     try {
-      // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
 
       const res = await axios.get(`${baseUrl}/api/v1/products?page=${page}`, {
@@ -206,10 +180,8 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        // setProducts(response.data);
         dispatch({ type: Action_Types.setProducts, payload: response.data });
 
-        // setLoading(false);
         dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
@@ -220,7 +192,6 @@ export const ContextProvider = ({ children }) => {
   //FetchUsers
   const fetchUser = async (page) => {
     try {
-      // setLoading(true);
       dispatch({ type: Action_Types.setLoading, payload: true });
 
       const res = await axios.get(`${baseUrl}/api/v1/users?page=${page}`, {
@@ -235,10 +206,8 @@ export const ContextProvider = ({ children }) => {
         const response = await res.data;
         console.log(response);
 
-        // setUsers(response.data);
         dispatch({ type: Action_Types.setUsers, payload: response.data });
 
-        // setLoading(false);
         dispatch({ type: Action_Types.setLoading, payload: false });
       }
     } catch (err) {
@@ -246,11 +215,12 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  const value = {
+  const values = {
     sidebarOpen,
     handleOpen,
     handleClose,
     loading,
+    perPage,
     currentPage,
     agents,
     handlePageChange,
@@ -263,9 +233,7 @@ export const ContextProvider = ({ children }) => {
     fetchProduct,
     users,
     fetchUser,
-    id,
-    setId: (newId) => dispatch({ type: Action_Types.setId, payload: newId }), // <-- Include setId in the context,
   };
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  return <Context.Provider value={values}>{children}</Context.Provider>;
 };

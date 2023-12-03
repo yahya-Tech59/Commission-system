@@ -8,16 +8,10 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { CiSearch } from "react-icons/ci";
-import { RiEditLine } from "react-icons/ri";
-import { RiDeleteBin2Line } from "react-icons/ri";
-import { EditAgent } from "../components/Models/AgentForms/EditAgent";
-import { DeleteAgent } from "../components/Models/AgentForms/DeleteAgent";
 
 export const Table = ({ data, columns }) => {
   const [sorting, setsorting] = useState([]);
   const [filter, setfilter] = useState("");
-  const [showEditAgent, setShowEditAgent] = useState(false);
-  const [showDeleteAgent, setShowDeleteAgent] = useState(false);
 
   const table = useReactTable({
     data,
@@ -36,19 +30,6 @@ export const Table = ({ data, columns }) => {
   return (
     <div className="">
       <div className="mt-3 mb-6 rounded-lg ">
-        {/* <div className="text-xl mt-10 ml-10">
-          <select
-            value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
-          >
-            {[10, 25, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                show {pageSize}
-              </option>
-            ))}
-          </select>
-        </div> */}
-
         <div className="mt-[-4rem]">
           <CiSearch className="ml-[91rem] relative top-6 text-2xl" />
           <input
@@ -97,42 +78,6 @@ export const Table = ({ data, columns }) => {
             ))}
           </tbody>
         </table>
-
-        {/* <span>
-          Page{" "}
-          <strong>
-            {table.pageIndex + 1} of {table.pageOptions.length}
-          </strong>{" "}
-        </span> */}
-
-        {/* <div className="ml-[76rem] pb-3">
-          <button
-            onClick={() => table.setPageIndex(0)}
-            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
-          >
-            {"<<"}
-          </button>
-          <button
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
-          >
-            Previous Page
-          </button>
-          <button
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
-          >
-            Next Page
-          </button>
-          <button
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            className="bg-slate-200 p-1 m-1 rounded-md pl-2 pr-2"
-          >
-            {">>"}
-          </button>
-        </div> */}
       </div>
     </div>
   );

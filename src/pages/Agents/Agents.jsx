@@ -3,18 +3,21 @@ import { useState, useEffect, useContext, useMemo } from "react";
 import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
 // import { Table } from "../../components/Table";
-import { AddAgent } from "../../components/Models/AgentForms/AddAgent";
+import { AddAgent } from "../../Models/AgentForms/AddAgent";
 import { IoMdAdd } from "react-icons/io";
 import { DataGrid } from "@mui/x-data-grid";
-// import { RiEditLine, RiDeleteBin2Line } from "react-icons/ri";
-// import { EditAgent } from "../../components/Models/AgentForms/EditAgent";
-// import { DeleteAgent } from "../../components/Models/AgentForms/DeleteAgent";
 import { Context } from "../../Context/Context";
 
 export const Agents = () => {
   const [showAddAgent, setShowAddAgent] = useState(false);
-  const { agents, loading, currentPage, handlePageChange, fetchAgent } =
-    useContext(Context);
+  const {
+    agents,
+    loading,
+    currentPage,
+    handlePageChange,
+    fetchAgent,
+    perPage,
+  } = useContext(Context);
 
   useEffect(() => {
     fetchAgent(currentPage);
@@ -30,7 +33,7 @@ export const Agents = () => {
       <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg pb-3 ">
         <h2 className="text-3xl pt-6 ml-7">Agents</h2>
 
-        <div className="ml-[80rem] -mt-10 mb-4 ">
+        <div className="ml-[80rem] mb-4 -mt-10 ">
           <button
             onClick={() => setShowAddAgent(true)}
             className="absolute flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "
@@ -39,16 +42,16 @@ export const Agents = () => {
             <IoMdAdd className=" text-2xl" />
           </button>
           {showAddAgent && (
-            <div
-              className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
-              style={{ zIndex: 1 }}
-            >
+            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-10">
               <AddAgent onClose={() => setShowAddAgent(false)} />
             </div>
           )}
         </div>
 
-        <div style={{ height: 630, width: "95%" }} className="ml-10 mt-20  ">
+        <div
+          style={{ height: 630, width: "95%" }}
+          className="ml-10 mt-20 mb-4  "
+        >
           <DataGrid
             rows={agents}
             columns={columns}
