@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useMemo } from "react";
 
- import { columns } from "./AgentColumns";
+import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
 // import { Table } from "../../components/Table";
 import { AddAgent } from "../../components/Models/AgentForms/AddAgent";
@@ -23,7 +23,6 @@ export const Agents = () => {
   if (loading === true) {
     return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
   }
-   
 
   return (
     <div className="ml-10">
@@ -40,14 +39,21 @@ export const Agents = () => {
             <IoMdAdd className=" text-2xl" />
           </button>
           {showAddAgent && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+            <div
+              className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
+              style={{ zIndex: 1 }}
+            >
               <AddAgent onClose={() => setShowAddAgent(false)} />
             </div>
           )}
         </div>
 
         <div style={{ height: 630, width: "95%" }} className="ml-10 mt-20  ">
-          <DataGrid rows={agents} columns={columns} getRowId={row => row.id} />
+          <DataGrid
+            rows={agents}
+            columns={columns}
+            getRowId={(row) => row.id}
+          />
         </div>
 
         <div className="ml-[76rem] mt-3 pb-3">

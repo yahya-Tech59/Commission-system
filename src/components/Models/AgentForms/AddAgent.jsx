@@ -56,7 +56,7 @@ export const AddAgent = ({ onClose }) => {
     <div className="flex bg-slate-100">
       <form
         onSubmit={handleSubmit(addAgent)}
-        className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[38rem] rounded-xl p-3"
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[38rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
