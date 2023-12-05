@@ -7,16 +7,20 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AddOrder } from "../../Models/OrderForms/AddOrder";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
-import { OrdersContext } from "../../Context/OrderContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrder } from "../../Redux/orderSlice";
 
 export const Orders = () => {
   const [showAddOrder, setShowAddOrder] = useState(false);
-  const { orders, loading, fetchOrder } = useContext(OrdersContext);
 
   const { currentPage, handlePageChange } = useContext(Context);
 
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.orders.orders);
+  const loading = useSelector((state) => state.orders.loading);
+
   useEffect(() => {
-    fetchOrder(currentPage);
+    dispatch(fetchOrder(currentPage));
   }, [currentPage]);
 
   if (loading === true) {

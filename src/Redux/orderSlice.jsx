@@ -1,28 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   orders: [],
   loading: true,
 };
 
-const orderSlice = createSlice({
-  name: "orders",
-  initialState,
-  reducers: {
-    setOrders: (state, action) => {
-      state.orders = action.payload;
-    },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-  },
-});
+export const fetchOrder = createAsyncThunk(
+  "orders/fetchOrder",
+  async (page) => {
+    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+    const token = localStorage.getItem("token");
 
-export const { setOrders, setLoading } = orderSlice.actions;
-
-export const fetchOrder = async (page) => {
-  try {
-    dispatch(setLoading(true));
     const res = await axios.get(`${baseUrl}/api/v1/orders?page=${page}`, {
       headers: {
         "Content-Type": "application/json",
@@ -31,17 +20,24 @@ export const fetchOrder = async (page) => {
       },
     });
 
-    if (res.status === 200) {
-      const response = await res.data;
-      console.log(response);
-
-      dispatch(setOrders(response.data));
-
-      dispatch(setLoading(false));
-    }
-  } catch (err) {
-    console.log(err);
+    return res.data.data;
   }
-};
+);
+
+const orderSlice = createSlice({
+  name: "orders",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders = action.payload;
+      });
+  },
+});
 
 export default orderSlice.reducer;

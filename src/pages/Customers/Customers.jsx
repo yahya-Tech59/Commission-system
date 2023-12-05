@@ -7,17 +7,20 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AddCustomer } from "../../Models/CustomerForms/AddCustomer";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
-import { CustomersContext } from "../../Context/CustomerContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCustomer } from "../../Redux/CustomerSlice";
 
 export const Customers = () => {
   const [showAddCustomer, setShowAddCustomer] = useState(false);
 
-  const { customers, loading, fetchCustomer } = useContext(CustomersContext);
-
   const { currentPage, handlePageChange } = useContext(Context);
 
+  const dispatch = useDispatch();
+  const customers = useSelector((state) => state.customers.customers);
+  const loading = useSelector((state) => state.customers.loading);
+
   useEffect(() => {
-    fetchCustomer(currentPage);
+    dispatch(fetchCustomer(currentPage));
   }, [currentPage]);
 
   if (loading === true) {
