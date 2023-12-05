@@ -2,22 +2,23 @@ import { useState, useEffect, useContext, useMemo } from "react";
 
 import { columns } from "./AgentColumns";
 import { Header } from "../../components/Header";
-// import { Table } from "../../components/Table";
 import { AddAgent } from "../../Models/AgentForms/AddAgent";
 import { IoMdAdd } from "react-icons/io";
 import { DataGrid } from "@mui/x-data-grid";
 import { Context } from "../../Context/Context";
+import { AgentsContext } from "../../Context/AgentContext";
+// import { useDispatch, useSelector } from "react-redux";
+// import { fetchAgent } from "../../Redux/AgentSlice";
 
 export const Agents = () => {
   const [showAddAgent, setShowAddAgent] = useState(false);
-  const {
-    agents,
-    loading,
-    currentPage,
-    handlePageChange,
-    fetchAgent,
-    perPage,
-  } = useContext(Context);
+  const { agents, loading, fetchAgent } = useContext(AgentsContext);
+
+  const { currentPage, handlePageChange } = useContext(Context);
+
+  // const dispatch = useDispatch();
+  // const agents = useSelector((state) => state.agents.agents);
+  // const loading = useSelector((state) => state.agents.loading);
 
   useEffect(() => {
     fetchAgent(currentPage);
@@ -33,7 +34,7 @@ export const Agents = () => {
       <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg pb-3 ">
         <h2 className="text-3xl pt-6 ml-7">Agents</h2>
 
-        <div className="ml-[80rem] mb-4 -mt-10 ">
+        <div className="ml-[84.8rem] mb-16 ">
           <button
             onClick={() => setShowAddAgent(true)}
             className="absolute flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "
@@ -48,10 +49,7 @@ export const Agents = () => {
           )}
         </div>
 
-        <div
-          style={{ height: 630, width: "95%" }}
-          className="ml-10 mt-20 mb-4  "
-        >
+        <div style={{ height: 630, width: "95%" }} className="ml-10 mb-4  ">
           <DataGrid
             rows={agents}
             columns={columns}

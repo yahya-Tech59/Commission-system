@@ -5,44 +5,55 @@ import { EditOrder } from "../../Models/OrderForms/EditOrder";
 import { DeleteOrder } from "../../Models/OrderForms/DeleteOrder";
 
 export const columns = [
+  { field: "id", headerName: "No", flex: 1 },
+  { field: "description", headerName: "Description", flex: 1 },
+  { field: "status", headerName: "Status", flex: 1 },
   {
-    header: "No",
-    accessorKey: "id",
+    field: "product_id",
+    headerName: "Product",
+    flex: 1,
+    renderCell: ({ row }) => <>{row.product?.name}</>,
   },
   {
-    header: "Description",
-    accessorKey: "description",
+    field: "product_price_id",
+    headerName: "Product-Price",
+    flex: 1,
+    renderCell: ({ row }) => <>{row.product?.price}</>,
   },
   {
-    header: "Status",
-    accessorKey: "status",
+    field: "product_commission",
+    headerName: "Product-Commission",
+    flex: 1,
+    renderCell: ({ row }) => <>{row.product?.price}</>,
   },
   {
-    header: "Product",
-    accessorKey: "product_id",
+    field: "customer",
+    headerName: "Customer",
+    flex: 1,
+    renderCell: ({ row }) => {
+      const customer =
+        row.customer && row.customer.length > 0 ? row.customer[0] : null;
+      return <>{customer ? customer.fullname : ""}</>;
+    },
   },
   {
-    header: "Product-Pride-ID",
-    accessorKey: "product_price_id",
+    field: "agent",
+    headerName: "Agent",
+    flex: 1,
+    renderCell: ({ row }) => {
+      const agent = row.customer && row.agent.length > 0 ? row.agent[0] : null;
+      return <>{agent ? agent.fullname : ""}</>;
+    },
   },
+  { field: "status_label", headerName: "Status-Label", flex: 1 },
   {
-    header: "Customer",
-    accessorKey: "customer",
-  },
-  {
-    header: "Agent",
-    accessorKey: "Agent",
-  },
-  {
-    header: "Amount",
-    accessorKey: "Amount",
-  },
-  {
-    header: "Actions",
-    accessorKey: "actions",
-    cell: ({ row }) => {
+    field: "actions",
+    headerName: "Actions",
+    flex: 1,
+    renderCell: ({ row }) => {
       const [showEditOrder, setShowEditOrder] = useState(false);
       const [showDeleteOrder, setShowDeleteOrder] = useState(false);
+      const [id, setId] = useState(null);
 
       return (
         <div className="flex space-x-4 hover:text-black ">
@@ -74,3 +85,44 @@ export const columns = [
     },
   },
 ];
+
+//  {
+//     "id": 5000,
+//     "description": "Mohammad Larson",
+//     "status": "2",
+//     "created_at": "2023-09-11 19:58:39",
+//     "updated_at": "2023-11-06 10:24:04",
+//     "deleted_at": null,
+//     "product_id": 739,
+//     "product_price_id": 739,
+//     "product_commission_id": 739,
+//     "owner_id": null,
+//     "status_label": "UnPaid",
+//     "product": {
+//       "id": 739,
+//       "name": "Miss Berenice Deckow V",
+//       "price": "8.00",
+//       "commission": "6.00",
+//       "created_at": "2023-11-06 10:23:10",
+//       "updated_at": "2023-11-06 10:23:10",
+//       "deleted_at": null
+//     },
+//     "customer": [
+//       {
+//         "id": 51,
+//         "fullname": "Corrine Konopelski",
+//         "phone": "(216) 518-7830",
+//         "address": "7866 Bridgette Forks\nAlleneberg, WY 29958",
+//         "description": "Dolorem nemo modi sint ut.",
+//         "created_at": "2023-11-06 10:23:07",
+//         "updated_at": "2023-11-06 10:23:07",
+//         "deleted_at": null,
+//         "agency_id": 136,
+//         "owner_id": null,
+//         "pivot": {
+//           "order_id": 5000,
+//           "customer_id": 51
+//         }
+//       }
+//     ],
+//   }

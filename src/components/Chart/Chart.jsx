@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LineChart } from "./Linechart";
+import { LineChart } from "./LineChart";
 import { UserData } from "./Data";
 
 export const Chart = () => {

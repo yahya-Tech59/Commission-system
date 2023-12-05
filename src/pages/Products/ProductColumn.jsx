@@ -5,26 +5,15 @@ import { EditProduct } from "../../Models/ProductForms/EditProduct";
 import { DeleteProduct } from "../../Models/ProductForms/DeleteProduct";
 
 export const columns = [
+  { field: "id", headerName: "No", flex: 1 },
+  { field: "name", headerName: "Prod_Name", flex: 1 },
+  { field: "price", headerName: "Price", flex: 1 },
+  { field: "commission", headerName: "Commission", flex: 1 },
   {
-    header: "No",
-    accessorKey: "id",
-  },
-  {
-    header: "Prod_Name",
-    accessorKey: "name",
-  },
-  {
-    header: "Price",
-    accessorKey: "price",
-  },
-  {
-    header: "Commission",
-    accessorKey: "commission",
-  },
-  {
-    header: "Actions",
-    accessorKey: "actions",
-    cell: ({ row }) => {
+    field: "actions",
+    headerName: "Actions",
+    flex: 1,
+    renderCell: ({ row }) => {
       const [showEditProduct, setShowEditProduct] = useState(false);
       const [showDeleteProduct, setShowDeleteProduct] = useState(false);
 

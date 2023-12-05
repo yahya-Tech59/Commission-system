@@ -24,7 +24,7 @@ export const AddOrder = ({ onClose }) => {
     <div className="flex bg-slate-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col ml-56 mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[54rem] rounded-xl p-3"
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[54rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
@@ -38,15 +38,6 @@ export const AddOrder = ({ onClose }) => {
           </div>
 
           <div className="space-y-6">
-            <div className="flex flex-col gap-1">
-              <label>ID</label>
-              <input
-                type="text"
-                {...register("id")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="1"
-              />
-            </div>
             <div className="flex flex-col gap-1">
               <label>Product</label>
               <input

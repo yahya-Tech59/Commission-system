@@ -50,9 +50,10 @@ export const SignUp = () => {
     }
   };
 
-  if (loading === false) {
+  if (loading === true) {
     return <h1 className="text-3xl font-semibold ml-[53rem]">Loading...</h1>;
   }
+
   return (
     <div className="flex bg-slate-100">
       <img src={hope} alt="" className="h-screen" />

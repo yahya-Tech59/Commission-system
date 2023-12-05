@@ -7,12 +7,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AddCustomer } from "../../Models/CustomerForms/AddCustomer";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
+import { CustomersContext } from "../../Context/CustomerContext";
 
 export const Customers = () => {
   const [showAddCustomer, setShowAddCustomer] = useState(false);
 
-  const { customers, loading, currentPage, handlePageChange, fetchCustomer } =
-    useContext(Context);
+  const { customers, loading, fetchCustomer } = useContext(CustomersContext);
+
+  const { currentPage, handlePageChange } = useContext(Context);
 
   useEffect(() => {
     fetchCustomer(currentPage);
@@ -28,7 +30,7 @@ export const Customers = () => {
       <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg">
         <h2 className="text-3xl pt-6 ml-7">Customers</h2>
 
-        <div className="ml-[80rem] mb-5  ">
+        <div className="ml-[83.3rem] mb-5  ">
           <button
             onClick={() => setShowAddCustomer(true)}
             className=" flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "

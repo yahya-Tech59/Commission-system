@@ -5,22 +5,14 @@ import { EditUser } from "../../Models/UserForms/EditUser";
 import { DeleteUser } from "../../Models/UserForms/DeleteUser";
 
 export const columns = [
+  { field: "id", headerName: "Id", flex: 1 },
+  { field: "name", headerName: "UserName", flex: 1 },
+  { field: "email", headerName: "Email", flex: 1 },
   {
-    header: "Id",
-    accessorKey: "id",
-  },
-  {
-    header: "UserName",
-    accessorKey: "name",
-  },
-  {
-    header: "Email",
-    accessorKey: "email",
-  },
-  {
-    header: "Actions",
-    accessorKey: "actions",
-    cell: ({ row }) => {
+    field: "actions",
+    headerName: "Actions",
+    flex: 1,
+    renderCell: ({ row }) => {
       const [showEditUser, setShowEditUser] = useState(false);
       const [showDeleteUser, setShowDeleteUser] = useState(false);
 
