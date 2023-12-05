@@ -41,7 +41,7 @@ export const columns = [
     headerName: "Agent",
     flex: 1,
     renderCell: ({ row }) => {
-      const agent = row.customer && row.agent.length > 0 ? row.agent[0] : null;
+      const agent = row.agent && row.agent.length > 0 ? row.agent[0] : null;
       return <>{agent ? agent.fullname : ""}</>;
     },
   },

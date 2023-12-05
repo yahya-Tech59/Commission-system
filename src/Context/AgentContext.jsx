@@ -31,6 +31,7 @@ export const AgentsProvider = ({ children }) => {
       console.log(err);
     }
   };
+
   const values = {
     agents,
     loading,

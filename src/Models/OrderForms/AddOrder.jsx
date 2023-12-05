@@ -24,7 +24,7 @@ export const AddOrder = ({ onClose }) => {
     <div className="flex bg-slate-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[54rem] rounded-xl p-3"
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[50rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">

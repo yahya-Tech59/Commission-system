@@ -6,22 +6,22 @@ import { AddAgent } from "../../Models/AgentForms/AddAgent";
 import { IoMdAdd } from "react-icons/io";
 import { DataGrid } from "@mui/x-data-grid";
 import { Context } from "../../Context/Context";
-import { AgentsContext } from "../../Context/AgentContext";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchAgent } from "../../Redux/AgentSlice";
+//import { AgentsContext } from "../../Context/AgentContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAgent } from "../../Redux/AgentSlice";
 
 export const Agents = () => {
   const [showAddAgent, setShowAddAgent] = useState(false);
-  const { agents, loading, fetchAgent } = useContext(AgentsContext);
+  // const { agents, loading, fetchAgent } = useContext(AgentsContext);
 
   const { currentPage, handlePageChange } = useContext(Context);
 
-  // const dispatch = useDispatch();
-  // const agents = useSelector((state) => state.agents.agents);
-  // const loading = useSelector((state) => state.agents.loading);
+  const dispatch = useDispatch();
+  const agents = useSelector((state) => state.agents.agents);
+  const loading = useSelector((state) => state.agents.loading);
 
   useEffect(() => {
-    fetchAgent(currentPage);
+    dispatch(fetchAgent(currentPage));
   }, [currentPage]);
 
   if (loading === true) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,6 +11,7 @@ export const AddCustomer = ({ onClose }) => {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [agency, setAgency] = useState([]);
 
   const handleClear = () => {
     setName("");
@@ -21,14 +22,42 @@ export const AddCustomer = ({ onClose }) => {
 
   const schema = yup.object().shape({
     fullname: yup.string().required(),
-    phone: yup.number().required(),
+    phone: yup.string().required(),
     address: yup.string().required(),
     description: yup.string().required(),
+    agencyId: yup.string().required(),
   });
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    // Fetch the list of agencies when the component mounts
+    const fetchAgency = async () => {
+      try {
+        const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get(`${baseUrl}/api/v1/agency`, {
+          headers: {
+            "Content-Type": "Application/json",
+            Accept: "Application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.status === 200) {
+          const agencyData = await res.data;
+          setAgency(agencyData.data);
+        }
+      } catch (err) {
+        console.error("Error fetching agencies:", err);
+      }
+    };
+
+    fetchAgency();
+  }, []);
 
   const AddCustomer = async (data) => {
     const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
@@ -58,7 +87,7 @@ export const AddCustomer = ({ onClose }) => {
     <div className="flex bg-slate-100">
       <form
         onSubmit={handleSubmit(AddCustomer)}
-        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[40rem] rounded-lg p-3"
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[44rem] rounded-lg p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
@@ -87,7 +116,7 @@ export const AddCustomer = ({ onClose }) => {
             <div className="flex flex-col gap-1">
               <label>Contact</label>
               <input
-                type="number"
+                type="string"
                 {...register("phone")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="123456"
@@ -117,6 +146,19 @@ export const AddCustomer = ({ onClose }) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
+            </div>
+            <div>
+              <label>Agency</label>
+              <select
+                {...register("agencyId")}
+                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                {agency.map((agency) => (
+                  <option key={agency.id} value={agency.id}>
+                    {agency.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
