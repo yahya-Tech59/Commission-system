@@ -3,28 +3,64 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { IoCloseOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
 
 export const AddProduct = ({ onClose }) => {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [commission, setCommission] = useState("");
+
+  function handleClear() {
+    setName("");
+    setPrice("");
+    setCommission("");
+  }
+
   const schema = yup.object().shape({
-    id: yup.string().required(),
     name: yup.string().required(),
-    business: yup.string().email().required(),
-    contact: yup.number().required(),
+    price: yup.number().required(),
+    commission: yup.number().required(),
   });
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const addProduct = async () => {
+    try {
+      const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
+      const token = localStorage.getItem("token");
+
+      const res = await axios.post(`${baseUrl}/api/v1/products`, {
+        headers: {
+          "Content-Type": "Application/json",
+          Accept: "Application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        const response = await res.data;
+        console.log(response);
+
+        setProducts(response.data);
+        handleClear();
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
   };
+
+  useEffect(() => {
+    addProduct();
+  }, []);
 
   return (
     <div className="flex bg-slate-100">
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[38rem] rounded-xl p-3"
+        onSubmit={handleSubmit(addProduct)}
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[32rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
@@ -39,31 +75,26 @@ export const AddProduct = ({ onClose }) => {
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">
-              <label>ID</label>
-              <input
-                type="text"
-                {...register("id")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="john"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
               <label>ProductName</label>
               <input
                 type="text"
-                {...register("productName")}
+                {...register("name")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
 
             <div className="flex flex-col gap-1">
               <label>Price</label>
               <input
-                type="text"
+                type="number"
                 {...register("price")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="$599"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -73,6 +104,8 @@ export const AddProduct = ({ onClose }) => {
                 {...register("commission")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="123456"
+                value={commission}
+                onChange={(e) => setCommission(e.target.value)}
               />
             </div>
           </div>
@@ -89,8 +122,9 @@ export const AddProduct = ({ onClose }) => {
               Submit
             </button>
             <button
-              type="submit"
+              type="button"
               className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-red-600 text-white text-xl "
+              onClick={handleClear}
             >
               Clear
             </button>

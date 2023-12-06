@@ -24,7 +24,7 @@ export const columns = [
       //   setAgents((prevAgents) =>
       //     prevAgents.filter((agent) => agent.id !== agentId)
       //   );
-      //   setShowDeleteAgent(false);
+      //   setShowDeleteAgent(false);7u
       // };
 
       return (
