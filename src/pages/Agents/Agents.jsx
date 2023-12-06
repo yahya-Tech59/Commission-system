@@ -8,7 +8,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Context } from "../../Context/Context";
 //import { AgentsContext } from "../../Context/AgentContext";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAgent } from "../../Redux/AgentSlice";
+import { fetchAgent } from "../../Services/AgentSlice";
 
 export const Agents = () => {
   const [showAddAgent, setShowAddAgent] = useState(false);

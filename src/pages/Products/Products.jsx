@@ -7,17 +7,19 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AddProduct } from "../../Models/ProductForms/AddProducts";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
-import { ProductsContext } from "../../Context/ProductContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "../../Services/ProductSlice";
 
 export const Products = () => {
   const [showAddProduct, setShowAddProduct] = useState(false);
-
-  const { products, loading, fetchProduct } = useContext(ProductsContext);
-
   const { currentPage, handlePageChange } = useContext(Context);
 
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
+  const loading = useSelector((state) => state.products.loading);
+
   useEffect(() => {
-    fetchProduct(currentPage);
+    dispatch(fetchProduct(currentPage));
   }, [currentPage]);
 
   if (loading === true) {

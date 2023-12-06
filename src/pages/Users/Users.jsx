@@ -7,17 +7,19 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AddUser } from "../../Models/UserForms/AddUsers";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
-import { UsersContext } from "../../Context/UserContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../../Services/UserSlice";
 
 export const Users = () => {
   const [showAddUser, setShowAddUser] = useState(false);
-
-  const { users, loading, fetchUser } = useContext(UsersContext);
-
   const { currentPage, handlePageChange } = useContext(Context);
 
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users.users);
+  const loading = useSelector((state) => state.users.loading);
+
   useEffect(() => {
-    fetchUser(currentPage);
+    dispatch(fetchUser(currentPage));
   }, [currentPage]);
 
   if (loading === true) {

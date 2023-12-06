@@ -8,7 +8,7 @@ import { AddCustomer } from "../../Models/CustomerForms/AddCustomer";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCustomer } from "../../Redux/CustomerSlice";
+import { fetchCustomer } from "../../Services/CustomerSlice";
 
 export const Customers = () => {
   const [showAddCustomer, setShowAddCustomer] = useState(false);

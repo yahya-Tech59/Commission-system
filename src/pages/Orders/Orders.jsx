@@ -8,7 +8,7 @@ import { AddOrder } from "../../Models/OrderForms/AddOrder";
 import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrder } from "../../Redux/orderSlice";
+import { fetchOrder } from "../../Services/OrderSlice";
 
 export const Orders = () => {
   const [showAddOrder, setShowAddOrder] = useState(false);
