@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
+import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const AddAgent = ({ onClose }) => {
@@ -31,18 +31,9 @@ export const AddAgent = ({ onClose }) => {
   });
 
   const addAgent = async (data) => {
-    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-    const token = localStorage.getItem("token");
-
     try {
       setLoading(true);
-      const res = await axios.post(`${baseUrl}/api/v1/agents`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post("agents", data);
 
       if (res.status === 201) {
         alert("Agent Registered successfully");
@@ -56,9 +47,9 @@ export const AddAgent = ({ onClose }) => {
     }
   };
 
-  // if (loading === true) {
-  //   return <h1 className="text-3xl font-semibold ">Loading...</h1>;
-  // }
+  if (loading === true) {
+    return <h1 className="text-3xl font-semibold ">Loading...</h1>;
+  }
 
   return (
     <div className="flex bg-slate-100">

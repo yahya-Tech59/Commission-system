@@ -8,16 +8,13 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { hope } from "../assets/img";
 import { Link } from "react-router-dom";
-import { Context } from "../Context/Context";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
   const schema = yup.object().shape({
     name: yup.string().required("name is required"),
@@ -37,7 +34,7 @@ export const SignUp = () => {
   const fetchRegister = async (data) => {
     try {
       setLoading(true);
-      const res = await axios.post(`${baseUrl}/api/auth/register`, data);
+      const res = await axios.post(`/api/auth/register`, data);
 
       localStorage.setItem("token", res.data.token);
 

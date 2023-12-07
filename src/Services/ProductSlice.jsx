@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 
 const initialState = {
   products: [],
@@ -9,16 +9,7 @@ const initialState = {
 export const fetchProduct = createAsyncThunk(
   "products/fetchProduct",
   async (page) => {
-    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-    const token = localStorage.getItem("token");
-
-    const res = await axios.get(`${baseUrl}/api/v1/products?page=${page}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await axios.get(`/api/v1/products?page=${page}`);
 
     return res.data.data;
   }

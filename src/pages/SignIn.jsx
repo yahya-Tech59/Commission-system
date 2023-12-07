@@ -7,7 +7,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
 import { hope } from "../assets/img";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 
 export const SignIn = () => {
@@ -16,8 +16,6 @@ export const SignIn = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
 
   const schema = yup.object().shape({
     email: yup
@@ -35,7 +33,7 @@ export const SignIn = () => {
   const fetchLogin = async (data) => {
     try {
       setLoading(true);
-      const res = await axios.post(`${baseUrl}/api/auth/login`, data);
+      const res = await axios.post(`/api/auth/login`, data);
 
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
