@@ -51,7 +51,7 @@ export const AddCustomer = ({ onClose }) => {
 
     if (res.status === 201) {
       alert("Customer Registered Successfully");
-      handleClear();
+      onClose();
       setLoading(false);
     }
   };

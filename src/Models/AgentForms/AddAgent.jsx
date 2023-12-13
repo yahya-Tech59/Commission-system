@@ -38,7 +38,7 @@ export const AddAgent = ({ onClose }) => {
       if (res.status === 201) {
         alert("Agent Registered successfully");
         console.log(res);
-        handleClear();
+        onClose();
         setLoading(false);
       }
     } catch (error) {

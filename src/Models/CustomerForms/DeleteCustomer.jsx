@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../api/axiosConfig";
 
 export const DeleteCustomer = ({ id, onClose }) => {

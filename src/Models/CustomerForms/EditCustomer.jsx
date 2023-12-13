@@ -5,7 +5,7 @@ import * as yup from "yup";
 import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
 
-export const EditCustomer = ({ onClose }) => {
+export const EditCustomer = ({ onClose, id }) => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
@@ -32,14 +32,14 @@ export const EditCustomer = ({ onClose }) => {
   });
 
   const fetchCustomer = () => {
-    const res = axios.get(`/api/v1/customers/${id}`);
+    const res = axios.get(`/api/v1/customers/${id}/edit`);
 
     if (res.status === 200) {
-      const agentData = res.data[0];
-      setFullName(agentData?.fullname || "");
-      setDescription(agentData?.description || "");
-      setBusiness(agentData?.business || "");
-      setContact(agentData?.phone || "");
+      const CustData = res.data[0];
+      setFullName(CustData?.fullname || "");
+      setDescription(CustData?.phone || "");
+      setBusiness(CustData?.address || "");
+      setContact(CustData?.agency_id || "");
 
       setLoading(false);
     }
@@ -65,11 +65,11 @@ export const EditCustomer = ({ onClose }) => {
   const EditCustomer = async (data) => {
     data.agency_id = agency_id;
     setLoading(true);
-    const res = await axios.put(`/api/v1/customers`, data);
+    const res = await axios.put(`/api/v1/customers/${id}`, data);
 
-    if (res.status === 201) {
-      alert("Customer Registered Successfully");
-      handleClear();
+    if (res.status === 202) {
+      alert("Customer Updated Successfully");
+      onClose();
       setLoading(false);
     }
   };
@@ -82,7 +82,7 @@ export const EditCustomer = ({ onClose }) => {
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
-            <h2 className="text-3xl ml-40">Add New Customer</h2>
+            <h2 className="text-3xl ml-40">Edit Customer</h2>
             <button
               onClick={onClose}
               className="h-8 w-8 p-1 bg-blue-500 text-white text-2xl font-medium rounded-md hover:bg-blue-600 ml-28"
@@ -114,7 +114,7 @@ export const EditCustomer = ({ onClose }) => {
                 onChange={(e) => setContact(e.target.value)}
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-1">
               <label>Address </label>
               <input
                 type="text"
@@ -126,7 +126,7 @@ export const EditCustomer = ({ onClose }) => {
               />
             </div>
 
-            <div>
+            <div className="flex flex-col gap-1">
               <label>Agent</label>
               <select
                 {...register("agency_id")}

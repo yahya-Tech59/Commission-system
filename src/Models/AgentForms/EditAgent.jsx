@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
+import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const EditAgent = ({ onClose, id }) => {
@@ -23,19 +23,17 @@ export const EditAgent = ({ onClose, id }) => {
     resolver: yupResolver(schema),
   });
 
+  const handleClear = () => {
+    setFullName("");
+    setDescription("");
+    setBusiness("");
+    setContact("");
+  };
+
   const fetchEditAgent = async () => {
-    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-    const token = localStorage.getItem("token");
-    console.log(token);
     try {
       setLoading(true);
-      const res = await axios.get(`${baseUrl}/api/v1/agents/${id}/edit`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(`/api/v1/agents/${id}/edit`);
 
       if (res.status === 200) {
         const agentData = res.data[0];
@@ -56,36 +54,25 @@ export const EditAgent = ({ onClose, id }) => {
   }, [id]);
 
   const editAgent = async () => {
-    const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-    const token = localStorage.getItem("token");
     try {
       setLoading(true);
-      const res = await axios.put(
-        `${baseUrl}/api/v1/agents/${id}`,
-        {
-          fullname,
-          description,
-          business,
-          phone: contact,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.put(`/api/v1/agents/${id}`, {
+        fullname,
+        description,
+        business,
+        phone: contact,
+      });
       if (res.status === 200) {
         alert("updated Successfuly");
+        onclose();
       }
     } catch (error) {
       alert(error);
     }
   };
-  // if (loading === true) {
-  //   return <h1 className="text-3xl font-semibold ">Loading...</h1>;
-  // }
+  if (loading === true) {
+    return <h1 className="text-3xl font-semibold ">Loading...</h1>;
+  }
   return (
     <div className="flex bg-slate-100">
       <form
@@ -161,7 +148,8 @@ export const EditAgent = ({ onClose, id }) => {
               Submit
             </button>
             <button
-              type="submit"
+              type="button"
+              onClick={handleClear}
               className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-red-600 text-white text-xl "
             >
               Clear
