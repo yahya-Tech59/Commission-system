@@ -16,17 +16,25 @@ export const columns = [
     renderCell: ({ row }) => {
       const [showEditProduct, setShowEditProduct] = useState(false);
       const [showDeleteProduct, setShowDeleteProduct] = useState(false);
+      const [id, setId] = useState(null);
 
       return (
         <div className="flex space-x-4 hover:text-black ">
           <button
-            onClick={() => setShowEditProduct(true)}
+            onClick={() => {
+              setShowEditProduct(true);
+              setId(row.id);
+            }}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiEditLine />
           </button>
           <button
-            onClick={() => setShowDeleteProduct(true)}
+            onClick={() => {
+              setShowDeleteProduct(true);
+              setId(row.id);
+              alert("Product Deleted Successfully");
+            }}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiDeleteBin2Line />
@@ -34,12 +42,15 @@ export const columns = [
 
           {showEditProduct && (
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <EditProduct onClose={() => setShowEditProduct(false)} />
+              <EditProduct onClose={() => setShowEditProduct(false)} id={id} />
             </div>
           )}
           {showDeleteProduct && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <DeleteProduct onClose={() => setShowDeleteProduct(false)} />
+            <div>
+              <DeleteProduct
+                onClose={() => setShowDeleteProduct(false)}
+                id={id}
+              />
             </div>
           )}
         </div>

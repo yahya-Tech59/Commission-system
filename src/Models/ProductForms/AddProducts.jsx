@@ -9,6 +9,7 @@ export const AddProduct = ({ onClose }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [commission, setCommission] = useState("");
+  const [products, setProducts] = useState([]);
 
   function handleClear() {
     setName("");
@@ -26,29 +27,15 @@ export const AddProduct = ({ onClose }) => {
     resolver: yupResolver(schema),
   });
 
-  const addProduct = async () => {
-    try {
-      const baseUrl = "https://spiky-crater-dep2vxlep8.ploi.online";
-      const token = localStorage.getItem("token");
+  const addProduct = async (data) => {
+    const res = await axios.post(`/api/v1/products`, data);
 
-      const res = await axios.post(`${baseUrl}/api/v1/products`, {
-        headers: {
-          "Content-Type": "Application/json",
-          Accept: "Application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.status === 200) {
-        const response = await res.data;
-        console.log(response);
-
-        setProducts(response.data);
-        handleClear();
-        setLoading(false);
-      }
-    } catch (err) {
-      console.error(err.message);
+    if (res.status === 201) {
+      const response = await res.data;
+      setProducts(response);
+      alert("Product Added Successfully");
+      onClose();
+      setLoading(false);
     }
   };
 

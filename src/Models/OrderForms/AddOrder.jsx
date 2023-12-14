@@ -101,6 +101,9 @@ export const AddOrder = ({ onClose }) => {
       setProduct_commission_id(data.product_commission_id);
       setStatus(data.status);
 
+      //  customer: Array.isArray(customer) ? customer : [customer],
+      // agent: Array.isArray(agent) ? agent : [agent],
+
       setLoading(true);
       const res = await axios.post(`/api/v1/orders`, {
         product_id,
@@ -189,7 +192,7 @@ export const AddOrder = ({ onClose }) => {
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label>Agent </label>
+              <label>Agent</label>
               <select
                 {...register("agent")}
                 defaultValue={agent}
@@ -264,7 +267,7 @@ export const AddOrder = ({ onClose }) => {
                 {orders.map((order) => (
                   <option
                     key={order.id}
-                    value={order.id}
+                    value={order.status}
                     className="text-slate-700"
                   >
                     {order.status_label}
