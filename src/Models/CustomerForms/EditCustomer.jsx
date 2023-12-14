@@ -143,7 +143,7 @@ export const EditCustomer = ({ onClose, id }) => {
                     value={agent.id}
                     className="text-black bg-white"
                   >
-                    {agent.name}
+                    {agent.fullname}
                   </option>
                 ))}
               </select>

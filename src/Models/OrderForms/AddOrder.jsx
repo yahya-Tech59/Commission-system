@@ -9,10 +9,9 @@ export const AddOrder = ({ onClose }) => {
   const [product_id, setProduct_id] = useState("");
   const [customer, setCustomer] = useState("");
   const [agent, setAgent] = useState("");
-  const [agency_id, setAgency_id] = useState("");
   const [product_price_id, setProduct_price_id] = useState("");
   const [product_commission_id, setProduct_commission_id] = useState("");
-  const [status_label, setStatus_label] = useState("");
+  const [status, setStatus] = useState("");
   const [products, setProducts] = useState([]);
   const [agents, setAgents] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -23,10 +22,9 @@ export const AddOrder = ({ onClose }) => {
     setProduct_id("");
     setCustomer("");
     setAgent("");
-    setAgency_id("");
     setProduct_price_id("");
     setProduct_commission_id("");
-    setStatus_label("");
+    setStatus("");
   };
 
   const schema = yup.object().shape({
@@ -35,7 +33,7 @@ export const AddOrder = ({ onClose }) => {
     agent: yup.number().required(),
     product_price_id: yup.number().required(),
     product_commission_id: yup.number().required(),
-    status_label: yup.string().required(),
+    status: yup.string().required(),
   });
 
   const { register, handleSubmit } = useForm({
@@ -95,20 +93,13 @@ export const AddOrder = ({ onClose }) => {
   }, []);
 
   const AddOrder = async (data) => {
-    // data.product_id = product_id;
-    // data.customer = customer;
-    // data.agent = agent;
-    // data.product_price_id = product_price_id;
-    // data.product_commission_id = product_commission_id;
-    // data.status_label = status_label;
-
     try {
       setProduct_id(data.product_id);
       setCustomer(data.customer);
       setAgent(data.agent);
       setProduct_price_id(data.product_price_id);
       setProduct_commission_id(data.product_commission_id);
-      setStatus_label(data.status_label);
+      setStatus(data.status);
 
       setLoading(true);
       const res = await axios.post(`/api/v1/orders`, {
@@ -117,7 +108,7 @@ export const AddOrder = ({ onClose }) => {
         agent,
         product_price_id,
         product_commission_id,
-        status_label,
+        status,
       });
 
       if (res.status === 200) {
@@ -137,7 +128,7 @@ export const AddOrder = ({ onClose }) => {
     <div className="flex bg-slate-100">
       <form
         onSubmit={handleSubmit(AddOrder)}
-        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[50rem] rounded-xl p-3"
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[48rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
@@ -186,13 +177,13 @@ export const AddOrder = ({ onClose }) => {
                 <option value="" disabled>
                   Select Customer
                 </option>
-                {customers.map((customer) => (
+                {customers.map((cust) => (
                   <option
-                    key={customer.id}
-                    value={customer.id}
+                    key={cust.id}
+                    value={cust.id}
                     className="text-slate-700"
                   >
-                    {customer.fullname}
+                    {cust.fullname}
                   </option>
                 ))}
               </select>
@@ -201,8 +192,8 @@ export const AddOrder = ({ onClose }) => {
               <label>Agent </label>
               <select
                 {...register("agent")}
-                defaultValue={agency_id}
-                onChange={(e) => setAgency_id(e.target.value)}
+                defaultValue={agent}
+                onChange={(e) => setAgent(e.target.value)}
                 className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
               >
                 <option value="" disabled>
@@ -222,7 +213,7 @@ export const AddOrder = ({ onClose }) => {
             <div>
               <label>Product Price</label>
               <select
-                {...register("product_Price_id")}
+                {...register("product_price_id")}
                 defaultValue={product_price_id}
                 onChange={(e) => setProduct_price_id(e.target.value)}
                 className="placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
@@ -262,9 +253,9 @@ export const AddOrder = ({ onClose }) => {
             <div>
               <label>status</label>
               <select
-                {...register("status_label")}
-                defaultValue={status_label}
-                onChange={(e) => setStatus_label(e.target.value)}
+                {...register("status")}
+                defaultValue={status}
+                onChange={(e) => setStatus(e.target.value)}
                 className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
               >
                 <option value="" disabled>
