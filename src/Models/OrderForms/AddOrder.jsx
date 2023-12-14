@@ -1,29 +1,142 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
+import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
 
 export const AddOrder = ({ onClose }) => {
+  const [product_id, setProduct_id] = useState("");
+  const [customer, setCustomer] = useState("");
+  const [agent, setAgent] = useState("");
+  const [agency_id, setAgency_id] = useState("");
+  const [product_price_id, setProduct_price_id] = useState("");
+  const [product_commission_id, setProduct_commission_id] = useState("");
+  const [status_label, setStatus_label] = useState("");
+  const [products, setProducts] = useState([]);
+  const [agents, setAgents] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleClear = () => {
+    setProduct_id("");
+    setCustomer("");
+    setAgent("");
+    setAgency_id("");
+    setProduct_price_id("");
+    setProduct_commission_id("");
+    setStatus_label("");
+  };
+
   const schema = yup.object().shape({
-    id: yup.string().required(),
-    name: yup.string().required(),
-    business: yup.string().email().required(),
-    contact: yup.number().required(),
+    product_id: yup.number().required(),
+    customer: yup.number().required(),
+    agent: yup.number().required(),
+    product_price_id: yup.number().required(),
+    product_commission_id: yup.number().required(),
+    status_label: yup.string().required(),
   });
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await axios.get(`/api/v1/products`);
+
+      if (res.status === 200) {
+        const productsData = await res.data;
+        setProducts(productsData.data);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      const res = await axios.get(`/api/v1/customers`);
+
+      if (res.status === 200) {
+        const customersData = await res.data;
+        setCustomers(customersData.data);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  useEffect(() => {
+    const fetchAgents = async () => {
+      const res = await axios.get(`/api/v1/agents`);
+
+      if (res.status === 200) {
+        const agentsData = await res.data;
+        setAgents(agentsData.data);
+      }
+    };
+
+    fetchAgents();
+  }, []);
+
+  useEffect(() => {
+    const fetchOrderStatus = async () => {
+      const res = await axios.get(`/api/v1/orders`);
+
+      if (res.status === 200) {
+        const OrderStatusData = await res.data;
+        setOrders(OrderStatusData.data);
+      }
+    };
+
+    fetchOrderStatus();
+  }, []);
+
+  const AddOrder = async (data) => {
+    // data.product_id = product_id;
+    // data.customer = customer;
+    // data.agent = agent;
+    // data.product_price_id = product_price_id;
+    // data.product_commission_id = product_commission_id;
+    // data.status_label = status_label;
+
+    try {
+      setProduct_id(data.product_id);
+      setCustomer(data.customer);
+      setAgent(data.agent);
+      setProduct_price_id(data.product_price_id);
+      setProduct_commission_id(data.product_commission_id);
+      setStatus_label(data.status_label);
+
+      setLoading(true);
+      const res = await axios.post(`/api/v1/orders`, {
+        product_id,
+        customer,
+        agent,
+        product_price_id,
+        product_commission_id,
+        status_label,
+      });
+
+      if (res.status === 200) {
+        alert("Order Registered Successfully");
+
+        onClose();
+        setLoading(false);
+      }
+    } catch (error) {
+      // Handle error appropriately
+      console.error("Error adding order:", error);
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex bg-slate-100">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(AddOrder)}
         className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[50rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
@@ -39,59 +152,134 @@ export const AddOrder = ({ onClose }) => {
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">
-              <label>Product</label>
-              <input
-                type="text"
-                {...register("product")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="speaker"
-              />
+              <label>ProductID</label>
+              <select
+                {...register("product_id")}
+                defaultValue={product_id}
+                onChange={(e) => setProduct_id(e.target.value)}
+                placeholder="select product ID"
+                className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                <option value="" disabled>
+                  Select Product
+                </option>
+                {products.map((product) => (
+                  <option
+                    key={product.id}
+                    value={product.id}
+                    className="text-slate-700"
+                  >
+                    {product.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="flex flex-col gap-1">
               <label>Customer</label>
-              <input
-                type="text"
+              <select
                 {...register("customer")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="james"
-              />
+                defaultValue={customer}
+                onChange={(e) => setCustomer(e.target.value)}
+                className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                <option value="" disabled>
+                  Select Customer
+                </option>
+                {customers.map((customer) => (
+                  <option
+                    key={customer.id}
+                    value={customer.id}
+                    className="text-slate-700"
+                  >
+                    {customer.fullname}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex flex-col gap-1">
               <label>Agent </label>
-              <input
-                type="text"
+              <select
                 {...register("agent")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="web..."
-              />
+                defaultValue={agency_id}
+                onChange={(e) => setAgency_id(e.target.value)}
+                className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                <option value="" disabled>
+                  Select an agent
+                </option>
+                {agents.map((agent) => (
+                  <option
+                    key={agent.id}
+                    value={agent.id}
+                    className="text-slate-700"
+                  >
+                    {agent.fullname}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
-              <label>Amount </label>
-              <input
-                type="number"
-                {...register("amount")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="$12"
-              />
+              <label>Product Price</label>
+              <select
+                {...register("product_Price_id")}
+                defaultValue={product_price_id}
+                onChange={(e) => setProduct_price_id(e.target.value)}
+                className="placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                <option value="" disabled>
+                  Select Product Price
+                </option>
+                {products.map((product) => (
+                  <option key={product.id} value={product.id}>
+                    {product.price}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
-              <label>Description</label>
-              <input
-                type="text"
-                {...register("description")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="something"
-              />
+              <label>Product Commission</label>
+              <select
+                {...register("product_commission_id")}
+                defaultValue={product_commission_id}
+                onChange={(e) => setProduct_commission_id(e.target.value)}
+                className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                <option value="" disabled>
+                  Select Product Commission
+                </option>
+                {products.map((product) => (
+                  <option
+                    key={product.id}
+                    value={product.id}
+                    className="text-slate-700"
+                  >
+                    {product.commission}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label>status</label>
-              <input
-                type="text"
-                {...register("phone")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="active"
-              />
+              <select
+                {...register("status_label")}
+                defaultValue={status_label}
+                onChange={(e) => setStatus_label(e.target.value)}
+                className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                <option value="" disabled>
+                  Select Order Status
+                </option>
+                {orders.map((order) => (
+                  <option
+                    key={order.id}
+                    value={order.id}
+                    className="text-slate-700"
+                  >
+                    {order.status_label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -107,7 +295,8 @@ export const AddOrder = ({ onClose }) => {
               Submit
             </button>
             <button
-              type="submit"
+              type="button"
+              onClick={handleClear}
               className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-red-600 text-white text-xl "
             >
               Clear

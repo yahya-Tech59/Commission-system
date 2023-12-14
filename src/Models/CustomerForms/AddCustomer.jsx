@@ -109,7 +109,7 @@ export const AddCustomer = ({ onClose }) => {
             </div>
 
             <div>
-              <label>Agent</label>
+              <label>Agency</label>
               <select
                 {...register("agency_id")}
                 defaultValue={agency_id}
@@ -125,7 +125,7 @@ export const AddCustomer = ({ onClose }) => {
                     value={agent.id}
                     className="text-slate-700"
                   >
-                    {agent.name}
+                    {agent.fullname}
                   </option>
                 ))}
               </select>

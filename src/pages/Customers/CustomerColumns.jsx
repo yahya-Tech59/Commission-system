@@ -42,6 +42,7 @@ export const columns = [
             onClick={() => {
               setId(row.id);
               setShowDeleteCustomer(true);
+              alert("Customer Deleted Succesfully");
             }}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
@@ -57,7 +58,7 @@ export const columns = [
             </div>
           )}
           {showDeleteCustomer && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+            <div>
               <DeleteCustomer
                 onClose={() => setShowDeleteCustomer(false)}
                 id={id}

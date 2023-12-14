@@ -9,7 +9,7 @@ export const DeleteCustomer = ({ id, onClose }) => {
       setLoading(true);
       const res = await axios.delete(`/api/v1/customers/${id}`);
 
-      if (res.status === 200) {
+      if (res.status === 204) {
         setLoading(false);
         onClose();
       }
