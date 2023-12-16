@@ -10,9 +10,9 @@ import {
   SignUp,
   SignOut,
 } from "./pages/index";
-import { NoMatch } from "./pages/NoMatch";
+import { NoMatch } from "./utils/NoMatch";
 import { Sidebar } from "./components/Sidebar";
-import { ProtectedRoutes } from "./components/ProtectedRoutes";
+import { ProtectedRoutes } from "./utils/ProtectedRoutes";
 
 const App = () => {
   return (

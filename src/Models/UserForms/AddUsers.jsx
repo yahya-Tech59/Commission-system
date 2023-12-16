@@ -1,30 +1,61 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
+import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
 
 export const AddUser = ({ onClose }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [roles, setRoles] = useState("");
+  const [role, setRole] = useState([]);
+  const [agent, setAgents] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const schema = yup.object().shape({
-    id: yup.string().required(),
     name: yup.string().required(),
-    business: yup.string().email().required(),
-    contact: yup.number().required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(4).max(15).required(),
+    roles: yup.string().required(),
   });
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  useEffect(() => {
+    const fetchRoles = async () => {
+      const res = await axios.get(`/api/v1/roles`);
+
+      if (res.status === 200) {
+        const roleData = await res.data;
+        setRole(roleData.data);
+      }
+    };
+
+    fetchRoles();
+  }, []);
+
+  const addUser = async (data) => {
+    setLoading(true);
+    const res = await axios.post("/api/v1/users", data);
+
+    if (res.status === 200) {
+      alert("User Registered successfully");
+      setUsers(res.data);
+      onClose();
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex bg-slate-100">
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[32rem] rounded-xl p-3"
+        onSubmit={handleSubmit(addUser)}
+        className="flex flex-col gap-1 bg-white shadow-slate-300 shadow-sm w-[38rem] h-[36rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <div className="flex">
@@ -39,19 +70,10 @@ export const AddUser = ({ onClose }) => {
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">
-              <label>ID</label>
-              <input
-                type="text"
-                {...register("id")}
-                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
-                placeholder="1"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
               <label>Name</label>
               <input
                 type="text"
-                {...register("productName")}
+                {...register("name")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="john"
               />
@@ -61,17 +83,45 @@ export const AddUser = ({ onClose }) => {
               <label>Email</label>
               <input
                 type="text"
-                {...register("price")}
+                {...register("email")}
                 className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
                 placeholder="$xyz@gmail.com"
               />
             </div>
+
+            <div className="flex flex-col gap-1">
+              <label>Password</label>
+              <input
+                type="password"
+                {...register("password")}
+                className=" bg-[#F9F9F9] placeholder:text-slate-400 p-3 mr-1 rounded-lg w-[34rem]"
+                placeholder="********"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <select
+                {...register("roles")}
+                defaultValue={roles}
+                onChange={(e) => setRoles(e.target.value)}
+                className="placeholder:text-slate-700 p-3 mr-1 rounded-lg w-[34rem]"
+              >
+                <option value="" disabled>
+                  Select Role
+                </option>
+                {role.map((rol) => (
+                  <option
+                    key={rol.id}
+                    value={rol.id}
+                    className="text-slate-700"
+                  >
+                    {rol.title}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          {/* <div className="flex mt-6 gap-4 justify-center ">
-            <input type="checkbox" />
-            <p>I agree With The Terms Of Use</p>
-          </div> */}
           <div className="flex gap-72 ml-5 ">
             <button
               type="submit"

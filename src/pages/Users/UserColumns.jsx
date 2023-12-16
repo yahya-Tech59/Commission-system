@@ -15,17 +15,25 @@ export const columns = [
     renderCell: ({ row }) => {
       const [showEditUser, setShowEditUser] = useState(false);
       const [showDeleteUser, setShowDeleteUser] = useState(false);
+      const [id, setId] = useState(null);
 
       return (
         <div className="flex space-x-4 hover:text-black ">
           <button
-            onClick={() => setShowEditUser(true)}
+            onClick={() => {
+              setShowEditUser(true);
+              setId(row.id);
+            }}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiEditLine />
           </button>
           <button
-            onClick={() => setShowDeleteUser(true)}
+            onClick={() => {
+              setShowDeleteUser(true);
+              setId(row.id);
+              alert("User Deleted Succesfully");
+            }}
             className="text-md p-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             <RiDeleteBin2Line />
@@ -33,12 +41,12 @@ export const columns = [
 
           {showEditUser && (
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <EditUser onClose={() => setShowEditUser(false)} />
+              <EditUser onClose={() => setShowEditUser(false)} id={id} />
             </div>
           )}
           {showDeleteUser && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <DeleteUser onClose={() => setShowDeleteUser(false)} />
+            <div>
+              <DeleteUser onClose={() => setShowDeleteUser(false)} id={id} />
             </div>
           )}
         </div>
