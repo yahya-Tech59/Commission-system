@@ -4,6 +4,8 @@ import * as yup from "yup";
 import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
+import ClearButton from "../../components/ClearButton";
+import SubmitButton from "../../components/SubmitButton";
 
 export const EditOrder = ({ onClose, id }) => {
   const [product_id, setProduct_id] = useState("");
@@ -298,19 +300,8 @@ export const EditOrder = ({ onClose, id }) => {
             <p>I agree With The Terms Of Use</p>
           </div> */}
           <div className="flex gap-72 ml-5 ">
-            <button
-              type="submit"
-              className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-blue-600 text-white text-xl "
-            >
-              Submit
-            </button>
-            <button
-              type="button"
-              onClick={handleClear}
-              className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-red-600 text-white text-xl "
-            >
-              Clear
-            </button>
+            <SubmitButton label="Submit" />
+            <ClearButton label="Clear" onClick={handleClear} />
           </div>
         </div>
       </form>

@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
+import ClearButton from "../../components/ClearButton";
+import SubmitButton from "../../components/SubmitButton";
 
 export const EditUser = ({ onClose }) => {
   const [name, setName] = useState("");
@@ -128,18 +130,8 @@ export const EditUser = ({ onClose }) => {
           </div>
 
           <div className="flex gap-72 ml-5 ">
-            <button
-              type="submit"
-              className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-blue-600 text-white text-xl "
-            >
-              Submit
-            </button>
-            <button
-              type="submit"
-              className="p-1 mr-1 rounded-lg w-28 h-12 mt-10 bg-red-600 text-white text-xl "
-            >
-              Clear
-            </button>
+            <SubmitButton label="Submit" />
+            <ClearButton label="Clear" onClick={handleClear} />
           </div>
         </div>
       </form>
