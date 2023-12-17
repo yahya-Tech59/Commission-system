@@ -9,6 +9,7 @@ import { Context } from "../../Context/Context";
 //import { AgentsContext } from "../../Context/AgentContext";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAgent } from "../../Services/AgentSlice";
+import { Search } from "../../components/Search";
 
 export const Agents = () => {
   const [showAddAgent, setShowAddAgent] = useState(false);
@@ -34,7 +35,7 @@ export const Agents = () => {
       <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg pb-3 ">
         <h2 className="text-3xl pt-6 ml-7">Agents</h2>
 
-        <div className="ml-[84.8rem] mb-16 ">
+        <div className="ml-[72rem] mb-[3.3rem] ">
           <button
             onClick={() => setShowAddAgent(true)}
             className="absolute flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "
@@ -47,6 +48,10 @@ export const Agents = () => {
               <AddAgent onClose={() => setShowAddAgent(false)} />
             </div>
           )}
+        </div>
+
+        <div className="mb-6">
+          <Search />
         </div>
 
         <div style={{ height: 630, width: "95%" }} className="ml-10 mb-4  ">
@@ -85,43 +90,6 @@ export const Agents = () => {
             {">>"}
           </button>
         </div>
-
-        {/* <table className="w-[92rem] ml-8 mt-10 mb-2">
-          <thead>
-            <tr className="hover:bg-zinc-700 hover:text-white">
-              <th className="border border-zinc-200 p-3 text-slate-400">No</th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Name
-              </th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Description
-              </th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Bussiness
-              </th>
-              <th className="border border-zinc-200 p-3 text-slate-400">
-                Phone
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {agents.map((agent, index) => (
-              <tr key={index} className="hover:bg-zinc-700 hover:text-white">
-                <td className=" border border-zinc-200 p-4">{agent.id}</td>
-                <td className=" border border-zinc-200 p-4">
-                  {agent.fullname}
-                </td>
-                <td className=" border border-zinc-200 p-4">
-                  {agent.description}
-                </td>
-                <td className=" border border-zinc-200 p-4">
-                  {agent.business}
-                </td>
-                <td className=" border border-zinc-200 p-4">{agent.phone}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table> */}
       </div>
     </div>
   );

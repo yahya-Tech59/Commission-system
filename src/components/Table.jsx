@@ -7,7 +7,6 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import { CiSearch } from "react-icons/ci";
 
 export const Table = ({ data, columns }) => {
   const [sorting, setsorting] = useState([]);
@@ -19,7 +18,7 @@ export const Table = ({ data, columns }) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    getFilteredRowModel: getFilterdRowModel(),
     state: {
       sorting: sorting,
       globalFilter: filter,

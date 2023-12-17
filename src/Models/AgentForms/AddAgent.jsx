@@ -6,13 +6,13 @@ import axios from "../../api/axiosConfig";
 import { IoCloseOutline } from "react-icons/io5";
 import SubmitButton from "../../components/SubmitButton";
 import ClearButton from "../../components/ClearButton";
+import useAddAgent from "../../hooks/useAddAgent";
 
 export const AddAgent = ({ onClose }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [business, setBusiness] = useState("");
   const [contact, setContact] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleClear = () => {
     setName("");
@@ -32,22 +32,7 @@ export const AddAgent = ({ onClose }) => {
     resolver: yupResolver(schema),
   });
 
-  const addAgent = async (data) => {
-    try {
-      setLoading(true);
-      const res = await axios.post("/api/vi/agents", data);
-
-      if (res.status === 201) {
-        alert("Agent Registered successfully");
-        console.log(res);
-        onClose();
-        setLoading(false);
-      }
-    } catch (error) {
-      alert(error.message); // Use error.message to get the error message
-      setLoading(false);
-    }
-  };
+  const { loading, addAgent } = useAddAgent(onClose);
 
   if (loading === true) {
     return <h1 className="text-3xl font-semibold ">Loading...</h1>;

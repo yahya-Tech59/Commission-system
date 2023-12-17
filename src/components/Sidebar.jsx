@@ -128,19 +128,3 @@ export const Sidebar = () => {
     </div>
   );
 };
-
-// const cols = [
-//   {
-//     header: "Actions",
-//     cell: (row) => {
-//       return (
-//         <button
-//           // onClick={a function based on the cell value}
-//         >
-//           {row.getValue() as ReactNode}
-//         </button>
-//       );
-//     },
-//     accessorKey: "actions",
-//   },
-// ],

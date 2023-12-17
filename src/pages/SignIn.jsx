@@ -6,7 +6,14 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
-import { hope } from "../assets/img";
+import {
+  Google,
+  facebook,
+  hope,
+  hope_ui,
+  instagram,
+  linkedin,
+} from "../assets/img";
 import axios from "../api/axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -54,14 +61,21 @@ export const SignIn = () => {
 
   return (
     <div className="flex bg-slate-100">
-      <img src={hope} alt="" className="h-screen" />
+      <div>
+        <di className="absolute">
+          <img src={hope_ui} alt="" className="w-[10rem] h-10 mt-10 ml-10" />
+        </di>
+        <img src={hope} alt="" className="h-screen w-[80rem]" />
+      </div>
       <form
         onSubmit={handleSubmit(fetchLogin)}
-        className="flex flex-col ml-[16rem] mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[65rem] h-[43rem] rounded-xl p-3"
+        className="flex flex-col ml-[16rem] mr-80 mb-12 mt-28 gap-1 bg-white shadow-slate-300 shadow-sm w-[55rem] h-[40rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
-          <h2 className="text-3xl ml-40">Sign In</h2>
-          <h2 className="text-lg ml-28 mt-2">Sign In to stay Connected</h2>
+          <div>
+            <h2 className="text-3xl ml-48">Sign In</h2>
+            <h2 className="text-lg ml-32 mt-2">Sign In to stay Connected</h2>
+          </div>
 
           <div className="flex flex-col mt-4 gap-5">
             <div>
@@ -97,8 +111,8 @@ export const SignIn = () => {
 
           <div className="flex mt-6 gap-4 ">
             <input type="checkbox" />
-            <p>I agree With The Terms Of Use</p>
-            <a className="text-sky-600 ml-[5rem]">Forget Password</a>
+            <p>Remember Me ?</p>
+            <a className="text-sky-600 ml-[12rem]">Forget Password</a>
           </div>
           <button
             type="submit"
@@ -113,11 +127,11 @@ export const SignIn = () => {
             or Sign In with other Account?
           </h2>
 
-          <div className="flex justify-center gap-3 mt-[-17px] ">
-            <FcGoogle className="text-xl" />
-            <FaFacebook className="text-xl text-blue-700" />
-            <FaInstagramSquare className="text-xl text-[]" />
-            <AiFillLinkedin className="text-xl text-blue-700" />
+          <div className="flex justify-center gap-3 ">
+            <img src={Google} alt="" />
+            <img src={facebook} alt="" className="h-6 mt-1" />
+            <img src={instagram} alt="" />
+            <img src={linkedin} alt="" />
           </div>
 
           <h2 className="text-center mt-3">

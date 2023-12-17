@@ -3,3 +3,8 @@ export { default as user } from "./user.png";
 export { default as cart } from "./cart.png";
 export { default as heart } from "./heart.png";
 export { default as notif } from "./notif.png";
+export { default as hope_ui } from "./Logo.png";
+export { default as Google } from "./Gmail.png";
+export { default as facebook } from "./Facebook.png";
+export { default as instagram } from "./Instagram.png";
+export { default as linkedin } from "./Linkedin.png";

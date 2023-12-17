@@ -6,7 +6,14 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillLinkedin } from "react-icons/ai";
-import { hope } from "../assets/img";
+import {
+  Google,
+  facebook,
+  hope,
+  hope_ui,
+  instagram,
+  linkedin,
+} from "../assets/img";
 import { Link } from "react-router-dom";
 import axios from "../api/axiosConfig";
 
@@ -53,10 +60,15 @@ export const SignUp = () => {
 
   return (
     <div className="flex bg-slate-100">
-      <img src={hope} alt="" className="h-screen" />
+      <div>
+        <di className="absolute">
+          <img src={hope_ui} alt="" className="w-[10rem] h-10 mt-10 ml-10" />
+        </di>
+        <img src={hope} alt="" className="h-screen w-[80rem]" />
+      </div>
       <form
         onSubmit={handleSubmit(fetchRegister)}
-        className="flex flex-col ml-56 mr-80 mb-12 mt-32 gap-1 bg-white shadow-slate-300 shadow-sm w-[60rem] h-[42rem] rounded-xl p-3"
+        className="flex flex-col ml-56 mr-80 mb-12 mt-32 gap-1 bg-white shadow-slate-300 shadow-sm w-[55rem] h-[42rem] rounded-xl p-3"
       >
         <div className="pb-16 ml-5 mt-8">
           <h2 className="text-3xl ml-40">Sign Up</h2>
@@ -65,7 +77,7 @@ export const SignUp = () => {
           <div className="flex mt-4 gap-5">
             <div>
               <span className="flex flex-col gap-1">
-                <label>Name </label>
+                <label>Full Name </label>
                 <input
                   type="text"
                   {...register("name")}
@@ -140,14 +152,14 @@ export const SignUp = () => {
 
         <div className="flex flex-col">
           <h2 className="relative bottom-10 text-center">
-            or Sign Up with other Account?
+            or Sign Up with other Accounts?
           </h2>
 
-          <div className="flex justify-center gap-3 mt-[-17px] ">
-            <FcGoogle className="text-xl" />
-            <FaFacebook className="text-xl text-blue-700" />
-            <FaInstagramSquare className="text-xl text-[]" />
-            <AiFillLinkedin className="text-xl text-blue-700" />
+          <div className="flex justify-center gap-3 ">
+            <img src={Google} alt="" />
+            <img src={facebook} alt="" className="h-6 mt-1" />
+            <img src={instagram} alt="" />
+            <img src={linkedin} alt="" />
           </div>
 
           <h2 className="text-center mt-3">

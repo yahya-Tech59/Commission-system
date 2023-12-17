@@ -9,6 +9,7 @@ import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomer } from "../../Services/CustomerSlice";
+import { Search } from "../../components/Search";
 
 export const Customers = () => {
   const [showAddCustomer, setShowAddCustomer] = useState(false);
@@ -33,7 +34,7 @@ export const Customers = () => {
       <div className="bg-white w-[96rem] mt-3 mb-6 ml-2 shadow-lg shadow-slate-300 rounded-lg">
         <h2 className="text-3xl pt-6 ml-7">Customers</h2>
 
-        <div className="ml-[83.3rem] mb-5  ">
+        <div className="ml-[70rem] mb-2  ">
           <button
             onClick={() => setShowAddCustomer(true)}
             className=" flex gap-4 text-md p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 cursor-pointer "
@@ -46,6 +47,10 @@ export const Customers = () => {
               <AddCustomer onClose={() => setShowAddCustomer(false)} />
             </div>
           )}
+        </div>
+
+        <div className="mb-4">
+          <Search />
         </div>
 
         <div style={{ height: 630, width: "95%" }} className="ml-10  mb-4  ">

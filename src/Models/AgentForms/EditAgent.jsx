@@ -72,6 +72,7 @@ export const EditAgent = ({ onClose, id }) => {
       alert(error);
     }
   };
+
   if (loading === true) {
     return <h1 className="text-3xl font-semibold ">Loading...</h1>;
   }
