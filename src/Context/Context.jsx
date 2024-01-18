@@ -28,3 +28,15 @@ export const ContextProvider = ({ children }) => {
 
   return <Context.Provider value={values}>{children}</Context.Provider>;
 };
+
+// function useContextProvider() {
+//   const context = useContext(MaterialUI);
+
+//   if (!context) {
+//     throw new Error(
+//       "useContextProvider should be used inside the MaterialUIControllerProvider."
+//     );
+//   }
+
+//   return context;
+// }
