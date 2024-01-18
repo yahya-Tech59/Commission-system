@@ -1,23 +1,27 @@
 import { useState, useEffect, useContext, useMemo } from "react";
 
 import { columns } from "./AgentColumns";
-import { Header } from "../../components/Header";
+import { Header } from "../../layouts/Header";
 import { AddAgent } from "../../Models/AgentForms/AddAgent";
 import { IoMdAdd } from "react-icons/io";
 import { DataGrid } from "@mui/x-data-grid";
 import { Context } from "../../Context/Context";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAgent } from "../../Services/AgentSlice";
 import { Search } from "../../components/Search";
-import { useFetchAgents } from "../../hooks/useFetchAgents";
 
 export const Agents = () => {
   const [showAddAgent, setShowAddAgent] = useState(false);
+  // const { agents, loading, fetchAgent } = useContext(AgentsContext);
 
-  const { agents, loading, fetchAgent } = useFetchAgents();
   const { currentPage, handlePageChange } = useContext(Context);
 
+  const dispatch = useDispatch();
+  const agents = useSelector((state) => state.agents.agents);
+  const loading = useSelector((state) => state.agents.loading);
+
   useEffect(() => {
-    fetchAgent(currentPage);
+    dispatch(fetchAgent(currentPage));
   }, [currentPage]);
 
   if (loading === true) {

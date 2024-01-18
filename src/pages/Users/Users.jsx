@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import { columns } from "./UserColumns";
-import { Header } from "../../components/Header";
+import { Header } from "../../layouts/Header";
 // import { Table } from "../../components/Table";
 import { DataGrid } from "@mui/x-data-grid";
 import { AddUser } from "../../Models/UserForms/AddUsers";

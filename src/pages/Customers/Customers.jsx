@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 
 import { columns } from "./CustomerColumns";
-import { Header } from "../../components/Header";
+import { Header } from "../../layouts/Header";
 // import { Table } from "../../components/Table";
 import { DataGrid } from "@mui/x-data-grid";
 import { AddCustomer } from "../../Models/CustomerForms/AddCustomer";
@@ -9,20 +9,20 @@ import { IoMdAdd } from "react-icons/io";
 import { Context } from "../../Context/Context";
 
 import { Search } from "../../components/Search";
-import { useFetchCustomers } from "../../hooks/useFetchCustomers";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCustomer } from "../../Services/CustomerSlice";
 
 export const Customers = () => {
   const [showAddCustomer, setShowAddCustomer] = useState(false);
 
   const { currentPage, handlePageChange } = useContext(Context);
-  const { customers, loading, fetchCustomer } = useFetchCustomers();
 
-  // const dispatch = useDispatch();
-  // const customers = useSelector((state) => state.customers.customers);
-  // const loading = useSelector((state) => state.customers.loading);
+  const dispatch = useDispatch();
+  const customers = useSelector((state) => state.customers.customers);
+  const loading = useSelector((state) => state.customers.loading);
 
   useEffect(() => {
-    fetchCustomer(currentPage);
+    dispatch(fetchCustomer(currentPage));
   }, [currentPage]);
 
   if (loading === true) {

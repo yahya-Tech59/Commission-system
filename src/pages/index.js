@@ -1,4 +1,4 @@
-import { Dashboard } from "./Dashboard";
+import { Dashboard } from "../layouts/Dashboard";
 import { Agents } from "./Agents/Agents";
 import { Customers } from "./Customers/Customers";
 import { Products } from "./Products/Products";

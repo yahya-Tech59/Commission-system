@@ -1,7 +1,7 @@
 import React from "react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../layouts/Footer";
 import { Chart } from "../components/Chart/Chart";
-import { Header } from "../components/Header";
+import { Header } from "../layouts/Header";
 
 export const Dashboard = () => {
   return (
